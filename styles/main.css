@@ -80,14 +80,18 @@ table {
     .col-4 {
         width: 33.33%
     }
+    /* Page navbar links */
+    .page-nav-item{
+        margin-left: 3%;
+        margin-right: 3%;
+    }
 }
 
 body {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-/* Page navbar links */
-.page-nav-item {
-    margin-left: 60px;
-    margin-right: 60px;
+/* anchor styling */
+.active-link {
+    color: black;
 }
