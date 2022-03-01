@@ -118,7 +118,7 @@ body {
 }
 
 #scroll-Div {
-    max-height: 100vh;
+    max-height: 90vh;
     overflow: auto;
 }
 
@@ -126,7 +126,6 @@ body {
     padding-top: 0rem;
 }
 
-.pairs {
-    margin: 0.5rem;
-    padding: 0.5rem;
+.img-thumbnail {
+    margin: 0.25rem;
 }
