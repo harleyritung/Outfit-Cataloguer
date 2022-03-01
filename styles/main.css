@@ -96,6 +96,10 @@ table {
         margin-left: 3%;
         margin-right: 3%;
     }
+
+    #scroll-Div {
+        max-height: 90vh;
+    }
 }
 
 body {
@@ -118,7 +122,6 @@ body {
 }
 
 #scroll-Div {
-    max-height: 90vh;
     overflow: auto;
 }
 
