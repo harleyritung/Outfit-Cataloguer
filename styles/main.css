@@ -120,6 +120,10 @@ body {
     text-decoration-thickness: 5%;
 }
 
+.underlined::first-letter {
+    font-style: italic;
+}
+
 .spaced-from-tb {
     margin-top: 2rem;
     margin-bottom: 2rem;
