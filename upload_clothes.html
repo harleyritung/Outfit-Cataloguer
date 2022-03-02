@@ -80,252 +80,253 @@
   <section>
     <!-- Upload clothes form -->
     <div class="col-md-4 file-upload-container">
-        <div class="container spaced-from-tb">
-            <h1 class="display-6 underlined">Upload Picture</h1>
-            <label for="upload-picture"></label>
-            <input style="color: black;" type="file" id="upload-picture" name="upload-picture" accept="image/*"></input>
-            <div class="drop-zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
-                <p class="drop-zone-text">Or drag a picture here</p>
-            </div>
+      <div class="container spaced-from-tb">
+        <h1 class="display-6 underlined ps-1">Upload Picture</h1>
+        <label for="upload-picture"></label>
+        <input style="color: black;" type="file" id="upload-picture" name="upload-picture" accept="image/*"></input>
+        <div class="drop-zone" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+          <p class="drop-zone-text p-1">Or drag a picture here</p>
         </div>
+      </div>
     </div>
     <!-- Attribute selection -->
-    <div class="col-md-8" id="scroll-Div" style="padding-bottom: 2rem;">
-        <!-- Required attributes -->
-        <div class="col-md-6">
-            <div class="container spaced-from-tb">
-                <div class="container">
-                    <h1 class="display-6">Required Attributes</h1>
-                    <hr class="m-2">
-                    <p class="mb-2">Formality:</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCasual">
-                        <label class="form-check-label" for="flexCheckCasual">
-                        Casual
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckBusinessCasual">
-                        <label class="form-check-label" for="flexCheckBusinessCasual">
-                        Business casual
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckSemiFormal">
-                        <label class="form-check-label" for="flexCheckSemiFormal">
-                        Semi-formal
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckFormal">
-                        <label class="form-check-label" for="flexCheckFormal">
-                        Formal
-                        </label>
-                    </div>
-                    <hr class="m-2">
-                    <p class="mb-2">Type:</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckTop">
-                        <label class="form-check-label" for="flexCheckTop">
-                        Top
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckBottom">
-                        <label class="form-check-label" for="flexCheckBottom">
-                        Bottom
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                        Full body
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckAccessory">
-                        <label class="form-check-label" for="flexCheckAccessory">
-                        Accessory
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckShoes">
-                        <label class="form-check-label" for="flexCheckShoes">
-                        Shoes
-                        </label>
-                    </div>
-                </div>
+    <div class="col-md-8" style="padding-bottom: 2rem;">
+      <!-- Required attributes -->
+      <div class="col-md-6">
+        <div class="container spaced-from-tb">
+          <div class="container">
+            <h1 class="display-6">Required Attributes</h1>
+            <hr class="m-2">
+            <p class="mb-2">Formality:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckCasual">
+              <label class="form-check-label" for="flexCheckCasual">
+                Casual
+              </label>
             </div>
-        </div>
-        <!-- Optional attributes -->
-        <div class="col-md-6">
-            <div class="container spaced-from-tb">
-                <div class="container">
-                    <h1 class="display-6">Optional Attributes</h1>
-                    <hr class="m-2">
-                    <p class="mb-2">Style:</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckSport">
-                        <label class="form-check-label" for="flexCheckSport">
-                        Sport
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckPreppy">
-                        <label class="form-check-label" for="flexCheckPreppy">
-                        Preppy
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckBoho">
-                        <label class="form-check-label" for="flexCheckBoho">
-                        Boho
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckGrunge">
-                        <label class="form-check-label" for="flexCheckGrunge">
-                        Grunge
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckStreetwear">
-                        <label class="form-check-label" for="flexCheckStreetwear">
-                        Streetwear
-                        </label>
-                    </div>
-                    <hr class="m-2">
-
-                    <p class="mb-2">Pattern:</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckPlain">
-                        <label class="form-check-label" for="flexCheckPlain">
-                        Plain
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckStripes">
-                        <label class="form-check-label" for="flexCheckStripes">
-                        Stripes
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckGraphic">
-                        <label class="form-check-label" for="flexCheckGraphic">
-                        Graphic
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDots">
-                        <label class="form-check-label" for="flexCheckDots">
-                        Dots
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckShoes">
-                        <label class="form-check-label" for="flexCheckShoes">
-                        Shoes
-                        </label>
-                    </div>
-                    <hr class="m-2">
-
-                    <p class="mb-2">Material:</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckCotton">
-                        <label class="form-check-label" for="flexCheckCotton">
-                        Cotton
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDenim">
-                        <label class="form-check-label" for="flexCheckDenim">
-                        Denim
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckLeather">
-                        <label class="form-check-label" for="flexCheckLeather">
-                        Leather
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckSynthetic">
-                        <label class="form-check-label" for="flexCheckSynthetic">
-                        Synthetic
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckWool">
-                        <label class="form-check-label" for="flexCheckWool">
-                        Wool
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckKhaki">
-                        <label class="form-check-label" for="flexCheckKhaki">
-                        Khaki
-                        </label>
-                    </div>
-                    <hr class="m-2">
-
-                    <p class="mb-2">Color</p>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckBlack">
-                        <label class="form-check-label" for="flexCheckBlack">
-                        Black
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckWhite">
-                        <label class="form-check-label" for="flexCheckWhite">
-                        White
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckGrey">
-                        <label class="form-check-label" for="flexCheckGrey">
-                        Grey
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckBlue">
-                        <label class="form-check-label" for="flexCheckBlue">
-                        Blue
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckGreen">
-                        <label class="form-check-label" for="flexCheckGreen">
-                        Green
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckRed">
-                        <label class="form-check-label" for="flexCheckRed">
-                        Red
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckPurple">
-                        <label class="form-check-label" for="flexCheckPurple">
-                        Purple
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckBrown">
-                        <label class="form-check-label" for="flexCheckBrown">
-                        Brown
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckOrange">
-                        <label class="form-check-label" for="flexCheckOrange">
-                        Orange
-                        </label>
-                    </div>
-                </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckBusinessCasual">
+              <label class="form-check-label" for="flexCheckBusinessCasual">
+                Business casual
+              </label>
             </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckSemiFormal">
+              <label class="form-check-label" for="flexCheckSemiFormal">
+                Semi-formal
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckFormal">
+              <label class="form-check-label" for="flexCheckFormal">
+                Formal
+              </label>
+            </div>
+            <hr class="m-2">
+            <p class="mb-2">Type:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckTop">
+              <label class="form-check-label" for="flexCheckTop">
+                Top
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckBottom">
+              <label class="form-check-label" for="flexCheckBottom">
+                Bottom
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                Full body
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckAccessory">
+              <label class="form-check-label" for="flexCheckAccessory">
+                Accessory
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckShoes">
+              <label class="form-check-label" for="flexCheckShoes">
+                Shoes
+              </label>
+            </div>
+          </div>
         </div>
+      </div>
+      <!-- Optional attributes -->
+      <div class="col-md-6" id="scroll-Div">
+        <div class="container spaced-from-tb">
+          <div class="container">
+            <h1 class="display-6">Optional Attributes</h1>
+            <hr class="m-2">
+            <p class="mb-2">Style:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckSport">
+              <label class="form-check-label" for="flexCheckSport">
+                Sport
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckPreppy">
+              <label class="form-check-label" for="flexCheckPreppy">
+                Preppy
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckBoho">
+              <label class="form-check-label" for="flexCheckBoho">
+                Boho
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckGrunge">
+              <label class="form-check-label" for="flexCheckGrunge">
+                Grunge
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckStreetwear">
+              <label class="form-check-label" for="flexCheckStreetwear">
+                Streetwear
+              </label>
+            </div>
+            <hr class="m-2">
+            <p class="mb-2">Pattern:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckPlain">
+              <label class="form-check-label" for="flexCheckPlain">
+                Plain
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckStripes">
+              <label class="form-check-label" for="flexCheckStripes">
+                Stripes
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckGraphic">
+              <label class="form-check-label" for="flexCheckGraphic">
+                Graphic
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDots">
+              <label class="form-check-label" for="flexCheckDots">
+                Dots
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckShoes">
+              <label class="form-check-label" for="flexCheckShoes">
+                Shoes
+              </label>
+            </div>
+            <hr class="m-2">
+            <p class="mb-2">Material:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckCotton">
+              <label class="form-check-label" for="flexCheckCotton">
+                Cotton
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckDenim">
+              <label class="form-check-label" for="flexCheckDenim">
+                Denim
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckLeather">
+              <label class="form-check-label" for="flexCheckLeather">
+                Leather
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckSynthetic">
+              <label class="form-check-label" for="flexCheckSynthetic">
+                Synthetic
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckWool">
+              <label class="form-check-label" for="flexCheckWool">
+                Wool
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckKhaki">
+              <label class="form-check-label" for="flexCheckKhaki">
+                Khaki
+              </label>
+            </div>
+            <hr class="m-2">
+
+            <p class="mb-2">Color</p>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckBlack">
+              <label class="form-check-label" for="flexCheckBlack">
+                Black
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckWhite">
+              <label class="form-check-label" for="flexCheckWhite">
+                White
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckGrey">
+              <label class="form-check-label" for="flexCheckGrey">
+                Grey
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckBlue">
+              <label class="form-check-label" for="flexCheckBlue">
+                Blue
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckGreen">
+              <label class="form-check-label" for="flexCheckGreen">
+                Green
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckRed">
+              <label class="form-check-label" for="flexCheckRed">
+                Red
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckPurple">
+              <label class="form-check-label" for="flexCheckPurple">
+                Purple
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckBrown">
+              <label class="form-check-label" for="flexCheckBrown">
+                Brown
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="flexCheckOrange">
+              <label class="form-check-label" for="flexCheckOrange">
+                Orange
+              </label>
+            </div>
+            <br>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
