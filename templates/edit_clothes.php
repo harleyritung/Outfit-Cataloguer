@@ -80,7 +80,7 @@
           <div class="container-fluid">
             <?php foreach ($list_of_clothes as $article) : ?>
               <a href="#" class="image-link">
-                <img src="images/200x200.svg" alt="Preview image of clothing article." class="img-thumbnail">
+                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($article['item_image']); ?>" alt="Preview image of clothing article." width="200" height="200" class="img-thumbnail">
               </a>
             <?php endforeach; ?>
             <br>
