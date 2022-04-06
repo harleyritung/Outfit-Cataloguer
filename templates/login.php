@@ -46,7 +46,7 @@
         <?php
             // print_r($_SESSION);
             // print_r($data);
-            echo $error_msg;
+            $error_msg;
             if (!empty($error_msg)) {
                 echo "<div class='alert alert-danger'>$error_msg</div>";
             }
