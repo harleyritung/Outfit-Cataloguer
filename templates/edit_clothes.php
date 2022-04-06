@@ -20,7 +20,7 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
-<body>
+<body">
   <header class="col-12">
     <!-- Home and settings navbar -->
     <nav id="topnav" class="navbar navbar-expand-lg navbar-light bg-transparent">
@@ -212,7 +212,7 @@
 
   <footer>
     <nav class="navbar fixed-bottom navbar-light bg-light" aria-label="breadcrumb">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding-top: 0.5rem;">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="?command=home">Home</a></li>
