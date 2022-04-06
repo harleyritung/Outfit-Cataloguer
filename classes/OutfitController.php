@@ -157,20 +157,31 @@ class OutfitController {
     }
 
     public function upload_clothes() {
-        $print = "";
+        // if user successfully submits an article
         if (isset($_POST["Name"])) {
             $img = NULL;
+            // check if user uploaded img
             if ($_FILES['article_img']['error'] == 0) {
                 $img = file_get_contents($_FILES['article_img']["tmp_name"]);
             }
 
+            // check for null values
+            $optional_attrs = [
+                "style" => $_POST["Style"],
+                "pattern" => $_POST["Pattern"],
+                "material" => $_POST["Material"],
+                "color" => $_POST["Color"]
+            ];
+            foreach ($optional_attrs as $key => $value) {
+                if ($value === "Null") {
+                    $optional_attrs[$key] = NULL;
+                }
+            }
+
             $insert = $this->db->query("insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
             item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);", "sissssssb", $_POST["Name"], $_SESSION["uid"], 
-            $_POST["Formality"], $_POST["Type"], $_POST["Style"], $_POST["Pattern"], $_POST["Material"], $_POST["Color"], $img);
-
-            if ($insert === false) {
-                $error_msg = "Error inserting user";
-            }
+            $_POST["Formality"], $_POST["Type"], $optional_attrs["style"], $optional_attrs["pattern"], $optional_attrs["material"], 
+            $optional_attrs["color"], $img);
         }
         include("templates/upload_clothes.php");
     }

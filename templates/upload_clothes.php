@@ -86,7 +86,6 @@
         <h1 class="display-6 underlined ps-1">Upload Picture</h1>
        <label for="image_input">Images can be no larger than 2mb.</label>
         <div class="img-container">
-          <input type="hidden" name="MAX_FILE_SIZE" value="4194304">
           <input type="file" id="image_input" accept="image/jpeg, image/png" name="article_img">
           <div id="display_image"></div>
         </div>
@@ -214,7 +213,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Style" value="StyleNull" id="flexRadioStyleNull" checked>
+              <input class="form-check-input" type="radio" name="Style" value="Null" id="flexRadioStyleNull" checked>
               <label class="form-check-label" for="flexRadioStyleNull">
                 Null
               </label>
@@ -248,7 +247,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Pattern" value="PatternNull" id="flexRadioPatternNull" checked>
+              <input class="form-check-input" type="radio" name="Pattern" value="Null" id="flexRadioPatternNull" checked>
               <label class="form-check-label" for="flexRadioPatternNull">
                 Null
               </label>
@@ -294,7 +293,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="MaterialNull" id="flexRadioMaterialNull" checked>
+              <input class="form-check-input" type="radio" name="Material" value="Null" id="flexRadioMaterialNull" checked>
               <label class="form-check-label" for="flexRadioMaterialNull">
                 Null
               </label>
@@ -370,7 +369,7 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Color" value="ColorNull" id="flexRadioColorNull" checked>
+              <input class="form-check-input" type="radio" name="Color" value="Null" id="flexRadioColorNull" checked>
               <label class="form-check-label" for="flexRadioColorNull">
                 Null
               </label>
