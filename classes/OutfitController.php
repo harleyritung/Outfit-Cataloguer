@@ -1,14 +1,16 @@
 <?php
 
-class OutfitController {
+class OutfitController
+{
     private $command;
 
     private $db;
-    
+
     // If using Monolog (with Composer)
     //private $logger;
 
-    public function __construct($command) {
+    public function __construct($command)
+    {
         //***********************************
         // If we use Composer to include the Monolog Logger
         // global $log;
@@ -21,8 +23,9 @@ class OutfitController {
         $this->db = new Database();
     }
 
-    public function run() {
-        switch($this->command) {
+    public function run()
+    {
+        switch ($this->command) {
             case "logout":
                 $this->delete_session();
                 session_start();
@@ -33,7 +36,7 @@ class OutfitController {
                 break;
             case "create_account":
                 $this->create_account();
-                break;  
+                break;
             case "home":
                 $this->home();
                 break;
@@ -61,31 +64,31 @@ class OutfitController {
         }
     }
 
-    public function delete_session() {
+    public function delete_session()
+    {
         session_unset();
         session_destroy();
         session_write_close();
-        setcookie(session_name(),'',0,'/');
+        setcookie(session_name(), '', 0, '/');
     }
 
     // Display the login page (and handle login logic)
-    private function login() {
+    private function login()
+    {
         if (isset($_POST["email"])) {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
                 $error_msg = "Error checking for user";
-            } 
-            else if (!empty($data)) {
+            } else if (!empty($data)) {
                 if (password_verify($_POST["password"], $data[0]["password"])) {
                     $_SESSION["name"] = $data[0]["name"];
                     $_SESSION["email"] = $data[0]["email"];
                     $_SESSION["uid"] = $data[0]["uid"];
                     header("Location: ?command=home");
-                } 
-                else {
+                } else {
                     $error_msg = "Wrong password";
                 }
-            } 
+            }
             // user doesn't exist
             else {
                 $error_msg = "No user with that email exists";
@@ -94,17 +97,18 @@ class OutfitController {
         include("templates/login.php");
     }
 
-    public function create_account() {
+    public function create_account()
+    {
         if (isset($_POST["email"])) {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
-            // if ($data === false) {
-            //     $error_msg = "Error checking for user";
-            // } 
+            if ($data === false) {
+                 $error_msg = "Error checking for user";
+            } 
 
             // user already exists
             if (!empty($data)) {
                 $error_msg = "Account with this email already exists";
-            } 
+            }
             // user doesn't exist
             else {
                 if ($_POST["password1"] === $_POST["password2"]) {
@@ -112,8 +116,13 @@ class OutfitController {
                     // password meets requirements
                     if (preg_match($pw_regex, $_POST["password1"]) === 1) {
                         $insert = $this->db->query("insert into project_user (name, email, password) values (?, ?, ?);", 
-                        "sss", $_POST["name"], $_POST["email"], 
+                        "sss", 
+                        $_POST["name"], 
+                        $_POST["email"], 
                         password_hash($_POST["password1"], PASSWORD_DEFAULT));
+                    if ($insert === false) {
+                        $error_msg = "Error inserting user";
+                    } else {
                         $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
                         $_SESSION["name"] = $_POST["name"];
                         $_SESSION["email"] = $_POST["email"];
@@ -134,11 +143,13 @@ class OutfitController {
         include("templates/create_account.php");
     }
 
-    public function home() {
+    public function home()
+    {
         include("templates/home.php");
     }
 
-    public function profile() {
+    public function profile()
+    {
         include("templates/profile.php");
     }
 
@@ -165,41 +176,76 @@ class OutfitController {
         include("templates/create_outfits.php");
     }
 
-    public function edit_clothes() {
+    public function edit_clothes()
+    {
+        $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
         include("templates/edit_clothes.php");
     }
 
-    public function saved_outfits() {
+    public function saved_outfits()
+    {
         include("templates/saved_outfits.php");
     }
 
-    public function upload_clothes() {
-        // if user successfully submits an article
-        if (isset($_POST["Name"])) {
-            $img = NULL;
-            // check if user uploaded img
-            if ($_FILES['article_img']['error'] == 0) {
-                $img = file_get_contents($_FILES['article_img']["tmp_name"]);
-            }
+    public function upload_clothes()
+    {
+        $print = "";
+        $status = $statusMsg = '';
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $status = 'error';
+            if (!empty($_FILES['article_img']['name'])) {
+                $fileName = basename($_FILES['article_img']['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
 
-            // check for and set null values
-            $optional_attrs = [
-                "style" => $_POST["Style"],
-                "pattern" => $_POST["Pattern"],
-                "material" => $_POST["Material"],
-                "color" => $_POST["Color"]
-            ];
-            foreach ($optional_attrs as $key => $value) {
-                if ($value === "Null") {
-                    $optional_attrs[$key] = NULL;
+                // Allow certain file formats 
+                $allowTypes = array('jpg', 'jpeg', 'png');
+                if (in_array($fileType, $allowTypes)) {
+                    $image = $_FILES['article_img']['tmp_name'];
+                    $imgContent = addslashes(file_get_contents($image));
+
+                    if ($imgContent !== "") {
+                        // check for and set null values
+                        $optional_attrs = [
+                            "style" => $_POST["Style"],
+                            "pattern" => $_POST["Pattern"],
+                            "material" => $_POST["Material"],
+                            "color" => $_POST["Color"]
+                        ];
+                        foreach ($optional_attrs as $key => $value) {
+                            if ($value === "Null") {
+                                $optional_attrs[$key] = NULL;
+                            }
+                        }
+                        // Insert image content into database 
+                        $insert = $this->db->query(
+                            "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
+                            item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                            "sissssssb",
+                            $_POST["Name"],
+                            $_SESSION["uid"],
+                            $_POST["Formality"],
+                            $_POST["Type"],
+                            $optional_attrs["style"], 
+                            $optional_attrs["pattern"], 
+                            $optional_attrs["material"], 
+                            $optional_attrs["color"],
+                            addslashes(file_get_contents($image))
+                        );
+
+                        if ($insert) {
+                            $status = 'success';
+                            $statusMsg = "File uploaded successfully.";
+                        } else {
+                            $statusMsg = "File upload failed, please try again.";
+                        }
+                    }
+                } else {
+                    $statusMsg = 'Sorry, only JPG, JPEG, & PNG files are allowed to upload.';
                 }
             }
-
-            $insert = $this->db->query("insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
-            item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);", "sissssssb", $_POST["Name"], $_SESSION["uid"], 
-            $_POST["Formality"], $_POST["Type"], $optional_attrs["style"], $optional_attrs["pattern"], $optional_attrs["material"], 
-            $optional_attrs["color"], $img);
         }
+        echo $statusMsg;
+
         include("templates/upload_clothes.php");
     }
 }

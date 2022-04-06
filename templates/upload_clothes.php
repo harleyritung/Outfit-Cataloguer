@@ -8,16 +8,14 @@
 
   <meta name="" value="author" content="Nathan Hartung, Vivine Zheng">
   <meta name="" value="description" content="A website for uploading clothing and generating outfits based on user input.">
-  <meta name="" value="keywords"
-    content="outfit maker, outfit creator, outfit inspiration, outfit cataloguer, wardorbe organizer">
+  <meta name="" value="keywords" content="outfit maker, outfit creator, outfit inspiration, outfit cataloguer, wardorbe organizer">
 
   <title>Outfit Cataloguer</title>
 
   <!-- Local CSS file -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
 <body>
@@ -26,8 +24,7 @@
     <nav id="topnav" class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="container-fluid">
         <a class="navbar-brand" href="?command=home">Outfit Cataloguer</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -36,8 +33,7 @@
               <a class="nav-link active" aria-current="page" href="?command=home">Home</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Settings
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -50,7 +46,7 @@
             </li>
           </ul>
           <span class="navbar-text">
-            Hello there, <?=$_SESSION["name"]?>!
+            Hello there, <?= $_SESSION["name"] ?>!
           </span>
         </div>
       </div>
@@ -80,99 +76,100 @@
     <!-- Upload clothes form -->
     <form enctype="multipart/form-data" action="?command=upload_clothes" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
 
-    <!-- Image upload -->
-    <div class="col-md-4 file-upload-container">
-      <div class="container spaced-from-tb">
-        <h1 class="display-6 underlined ps-1">Upload Picture</h1>
-       <label for="image_input">Images can be no larger than 2MB.</label>
-        <div class="img-container">
-          <input type="file" id="image_input" accept="image/jpeg, image/png" name="article_img">
-          <div id="display_image"></div>
+      <!-- Image upload -->
+      <div class="col-md-4 file-upload-container">
+        <div class="container spaced-from-tb">
+          <h1 class="display-6 underlined ps-1">Upload Picture</h1>
+          <label for="image_input" style="margin-bottom: 1rem;">Images can be no larger than 2 MB.</label>
+          <div class="img-container">
+            <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg" name="article_img">
+            <div id="display_image"></div>
+          </div>
+          <br>
+          <!-- upload button -->
+          <button class="btn btn-primary submit-button" type="submit">Upload to Wardrobe</button>
         </div>
       </div>
-    </div>
 
-    <!-- Attribute selection -->
-    <div class="col-md-8" id="scroll-Div" style="padding-bottom: 2rem;">
-      <!-- Required attributes -->
-      <div class="col-md-6">
-        <div class="container spaced-from-tb">
-          <div class="container">
-            <h1 class="display-6">Required Attributes</h1>
-            <hr class="m-2">
+      <!-- Attribute selection -->
+      <div class="col-md-8" id="scroll-Div" style="padding-bottom: 2rem;">
+        <!-- Required attributes -->
+        <div class="col-md-6">
+          <div class="container spaced-from-tb">
+            <div class="container">
+              <h1 class="display-6">Required Attributes</h1>
+              <hr class="m-2">
 
-            <!-- Article Name -->
-            <div class="mb-2">
-              <label for="ArticleName" class="form-label">Article Name:</label>
-              <input type="text" class="form-control" id="ArticleName" name="Name">
-            </div>
-            <hr class="m-2">
+              <!-- Article Name -->
+              <div class="mb-2">
+                <label for="ArticleName" class="form-label">Article Name:</label>
+                <input type="text" class="form-control" id="ArticleName" name="Name" style="margin-bottom: 1rem;">
+              </div>
+              <hr class="m-2">
 
-            <!-- Formality -->
-            <p class="mb-2">Formality:</p>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Formality" value="Casual" id="flexRadioCasual" >
-              <label class="form-check-label" for="flexRadioCasual">
-                Casual
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Formality" value="BusinessCasual" id="flexRadioBusinessCasual">
-              <label class="form-check-label" for="flexRadioBusinessCasual">
-                Business casual
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Formality" value="SemiFormal" id="flexRadioSemiFormal">
-              <label class="form-check-label" for="flexRadioSemiFormal">
-                Semi-formal
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Formality" value="Formal" id="flexRadioFormal">
-              <label class="form-check-label" for="flexRadioFormal">
-                Formal
-              </label>
-            </div>
-            <hr class="m-2">
+              <!-- Formality -->
+              <p class="mb-2">Formality:</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Formality" value="Casual" id="flexRadioCasual">
+                <label class="form-check-label" for="flexRadioCasual">
+                  Casual
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Formality" value="BusinessCasual" id="flexRadioBusinessCasual">
+                <label class="form-check-label" for="flexRadioBusinessCasual">
+                  Business casual
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Formality" value="SemiFormal" id="flexRadioSemiFormal">
+                <label class="form-check-label" for="flexRadioSemiFormal">
+                  Semi-formal
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Formality" value="Formal" id="flexRadioFormal">
+                <label class="form-check-label" for="flexRadioFormal">
+                  Formal
+                </label>
+              </div>
+              <hr class="m-2">
 
-            <!-- Type Selection -->
-            <p class="mb-2">Type:</p>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Type" value="Top" id="flexRadioTop">
-              <label class="form-check-label" for="flexRadioTop">
-                Top
-              </label>
+              <!-- Type Selection -->
+              <p class="mb-2">Type:</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" value="Top" id="flexRadioTop">
+                <label class="form-check-label" for="flexRadioTop">
+                  Top
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" value="Bottom" id="flexRadioBottom">
+                <label class="form-check-label" for="flexRadioBottom">
+                  Bottom
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" value="FullBody" id="flexRadioFullBody">
+                <label class="form-check-label" for="flexRadioFullyBody">
+                  Full body
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" value="Accessory" id="flexRadioAccessory">
+                <label class="form-check-label" for="flexRadioAccessory">
+                  Accessory
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Type" value="Shoes" id="flexRadioShoes">
+                <label class="form-check-label" for="flexRadioShoes">
+                  Shoes
+                </label>
+              </div>
             </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Type" value="Bottom" id="flexRadioBottom">
-              <label class="form-check-label" for="flexRadioBottom">
-                Bottom
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Type" value="FullBody" id="flexRadioFullBody">
-              <label class="form-check-label" for="flexRadioFullyBody">
-                Full body
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Type" value="Accessory" id="flexRadioAccessory">
-              <label class="form-check-label" for="flexRadioAccessory">
-                Accessory
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Type" value="Shoes" id="flexRadioShoes">
-              <label class="form-check-label" for="flexRadioShoes">
-                Shoes
-              </label>
-            </div>
-            <hr class="m-2">
           </div>
         </div>
-        <!-- upload button -->
-          <button class="btn btn-primary submit-button" type="submit">Upload to Wardrobe</button>
       </div>
 
       <!-- Optional attributes -->
@@ -299,21 +296,21 @@
               </label>
             </div>
             <hr class="m-2">
-
-            <!-- Color Selection -->
-            <p class="mb-2">Color:</p>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Color" value="Black" id="flexRadioBlack">
-              <label class="form-check-label" for="flexRadioBlack">
-                Black
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Color" value="Brown" id="flexRadioBrown">
-              <label class="form-check-label" for="flexRadioBrown">
-                Brown
-              </label>
-            </div>
+            
+              <!-- Color Selection -->
+              <p class="mb-2">Color:</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Black" id="flexRadioBlack">
+                <label class="form-check-label" for="flexRadioBlack">
+                  Black
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Brown" id="flexRadioBrown">
+                <label class="form-check-label" for="flexRadioBrown">
+                  Brown
+                </label>
+              </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="Color" value="White" id="flexRadioWhite">
               <label class="form-check-label" for="flexRadioWhite">
@@ -379,26 +376,23 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </section>
 
   <footer>
     <nav class="navbar fixed-bottom navbar-light bg-light" aria-label="breadcrumb">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding-top: 0.5rem;">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="?command=home">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a class="active-link"
-                href="?command=upload_clothes">Upload Clothes</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a class="active-link" href="?command=upload_clothes">Upload Clothes</a></li>
           </ol>
         </nav>
         <small style="justify-content: right;">Copyright &copy; 2022 Nathan Hartung &amp; Vivine Zheng</small>
       </div>
     </nav>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
 </body>
 
