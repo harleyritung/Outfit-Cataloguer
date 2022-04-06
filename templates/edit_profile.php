@@ -79,23 +79,31 @@
   <div class="col-12">
     <div class="container spaced-from-tb">
       <h1 class="display-6 underlined">Profile</h1>
+        <?php
+            if (!empty($error_msg)) {
+                echo "<div class='alert alert-danger'>$error_msg</div>";
+            }        
+        ?>
+      <!-- Edit profile form -->
+      <form action="?command=edit_profile" method="post">
       <div class="mb-3 row">
         <label for="email" class="col-sm-2 col-form-label">Email:</label>
         <div class="col-sm-10">
-          <input class="form-control" style="width: 50%" type="email" id="email" value="<?=$_SESSION['email']?>" aria-label="Disabled input email" disabled readonly>
+          <input class="form-control" style="width: 50%" type="email" id="email" name="email" value="<?=$_SESSION['email']?>">
         </div>
       </div>
       <div class="mb-3 row">
         <label for="name" class="col-sm-2 col-form-label">Name:</label>
         <div class="col-sm-10">
-          <input class="form-control" style="width: 50%" type="text" id="name" value="<?=$_SESSION['name']?>" aria-label="Disabled input name" disabled readonly>
+          <input class="form-control" style="width: 50%" type="text" id="name" name="name" value="<?=$_SESSION['name']?>">
         </div>
       <div class="mb-3 row">
         <div class="col-sm-2 col-form-label">
-          <a class="btn btn-primary" href="?command=edit_profile">Edit</a>
+          <button class="btn btn-primary" type="submit">Submit</button>
+          <a class="btn btn-danger" href="?command=profile">Cancel</a>
         </div>
       </div>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -105,8 +113,9 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="?command=home">Home</a></li>
+            <li class="breadcrumb-item"><a href="?command=profile">Profile</a></li>
             <li class="breadcrumb-item active" aria-current="page"><a class="active-link"
-                href="?command=profile">Profile</a></li>
+                href="?command=edit_profile">Edit Profile</a></li>
           </ol>
         </nav>
         <small style="justify-content: right;">Copyright &copy; 2022 Nathan Hartung &amp; Vivine Zheng</small>

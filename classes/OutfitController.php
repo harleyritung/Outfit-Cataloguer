@@ -27,45 +27,38 @@ class OutfitController
     {
         switch ($this->command) {
             case "logout":
-                // session_start();
                 $this->delete_session();
                 session_start();
                 $this->login();
                 break;
             case "login":
-                // session_start();
                 $this->login();
                 break;
             case "create_account":
-                // session_start();
                 $this->create_account();
                 break;
             case "home":
-                // session_start();
                 $this->home();
                 break;
             case "profile":
-                // session_start();
                 $this->profile();
                 break;
+            case "edit_profile":
+                $this->edit_profile();
+                break;
             case "create_outfits":
-                // session_start();
                 $this->create_outfits();
                 break;
             case "edit_clothes":
-                // session_start();
                 $this->edit_clothes();
                 break;
             case "saved_outfits":
-                // session_start();
                 $this->saved_outfits();
                 break;
             case "upload_clothes":
-                // session_start();
                 $this->upload_clothes();
                 break;
             default:
-                // session_start();
                 $this->login();
                 break;
         }
@@ -109,22 +102,24 @@ class OutfitController
         if (isset($_POST["email"])) {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
-                $error_msg = "Error checking for user";
-            }
+                 $error_msg = "Error checking for user";
+            } 
+
             // user already exists
-            else if (!empty($data)) {
+            if (!empty($data)) {
                 $error_msg = "Account with this email already exists";
             }
             // user doesn't exist
             else {
                 if ($_POST["password1"] === $_POST["password2"]) {
-                    $insert = $this->db->query(
-                        "insert into project_user (name, email, password) values (?, ?, ?);",
-                        "sss",
-                        $_POST["name"],
-                        $_POST["email"],
-                        password_hash($_POST["password1"], PASSWORD_DEFAULT)
-                    );
+                    $pw_regex = "/[a-zA-Z0-9!@#$%^&*,.?]{8,}/";
+                    // password meets requirements
+                    if (preg_match($pw_regex, $_POST["password1"]) === 1) {
+                        $insert = $this->db->query("insert into project_user (name, email, password) values (?, ?, ?);", 
+                        "sss", 
+                        $_POST["name"], 
+                        $_POST["email"], 
+                        password_hash($_POST["password1"], PASSWORD_DEFAULT));
                     if ($insert === false) {
                         $error_msg = "Error inserting user";
                     } else {
@@ -133,6 +128,10 @@ class OutfitController
                         $_SESSION["email"] = $_POST["email"];
                         $_SESSION["uid"] = $data[0]["uid"];
                         header("Location: ?command=home");
+                    }
+                    // password fails regex
+                    else {
+                        $error_msg = "Make sure password meets requirements";
                     }
                 }
                 // passwords don't match
@@ -154,8 +153,26 @@ class OutfitController
         include("templates/profile.php");
     }
 
-    public function create_outfits()
-    {
+    public function edit_profile() {
+        // user edited profile
+        if (isset($_POST["email"])) {
+            $_SESSION["email"] = $_POST["email"];
+            $_SESSION["name"] = $_POST["name"];
+
+            $update = $this->db->query("update project_user set email=?, name=? where uid=?;", "ssi", $_POST["email"], $_POST["name"], 
+            $_SESSION["uid"]);
+            if ($update === false) {
+                $error_msg = "Error updating profile";
+            }
+            else {
+                $this->profile();
+                return;
+            }
+        }
+        include("templates/edit_profile.php");
+    }
+
+    public function create_outfits() {
         include("templates/create_outfits.php");
     }
 
@@ -187,19 +204,31 @@ class OutfitController
                     $imgContent = addslashes(file_get_contents($image));
 
                     if ($imgContent !== "") {
+                        // check for and set null values
+                        $optional_attrs = [
+                            "style" => $_POST["Style"],
+                            "pattern" => $_POST["Pattern"],
+                            "material" => $_POST["Material"],
+                            "color" => $_POST["Color"]
+                        ];
+                        foreach ($optional_attrs as $key => $value) {
+                            if ($value === "Null") {
+                                $optional_attrs[$key] = NULL;
+                            }
+                        }
                         // Insert image content into database 
                         $insert = $this->db->query(
                             "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
-                    item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                            item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
                             "sissssssb",
                             $_POST["Name"],
                             $_SESSION["uid"],
                             $_POST["Formality"],
                             $_POST["Type"],
-                            $_POST["Style"],
-                            $_POST["Pattern"],
-                            $_POST["Material"],
-                            $_POST["Color"],
+                            $optional_attrs["style"], 
+                            $optional_attrs["pattern"], 
+                            $optional_attrs["material"], 
+                            $optional_attrs["color"],
                             addslashes(file_get_contents($image))
                         );
 

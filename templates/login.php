@@ -14,7 +14,7 @@
   <title>Outfit Cataloguer</title>
 
   <!-- Local CSS file -->
-  <!-- <link rel="stylesheet" href="styles/main.css"> -->
+  <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -35,7 +35,7 @@
 </header>
 
 <div class="container" style="margin-top: 15px;">
-    <div class="row col-xs-8 text-center">
+    <div class="row col-xs-8 text-center" style="float: none; width: auto">
     <h1>Log in</h1>
         <p> Welcome back to Outfit Cataloguer. To log in, enter your information below.</p>
         <small>
@@ -44,9 +44,6 @@
     </div>
     <div class="row justify-content-center">
         <?php
-            // print_r($_SESSION);
-            // print_r($data);
-            $error_msg;
             if (!empty($error_msg)) {
                 echo "<div class='alert alert-danger'>$error_msg</div>";
             }

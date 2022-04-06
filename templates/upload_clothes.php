@@ -75,14 +75,14 @@
   <section>
     <!-- Upload clothes form -->
     <form enctype="multipart/form-data" action="?command=upload_clothes" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
+
       <!-- Image upload -->
       <div class="col-md-4 file-upload-container">
         <div class="container spaced-from-tb">
           <h1 class="display-6 underlined ps-1">Upload Picture</h1>
           <label for="image_input" style="margin-bottom: 1rem;">Images can be no larger than 2 MB.</label>
           <div class="img-container">
-            <input type="hidden" name="MAX_FILE_SIZE" value="4194304">
-            <input type="file" id="article_img" accept="image/jpeg, image/png" name="article_img">
+            <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg" name="article_img">
             <div id="display_image"></div>
           </div>
           <br>
@@ -170,113 +170,133 @@
             </div>
           </div>
         </div>
-        <!-- Optional attributes -->
-        <div class="col-md-6">
-          <div class="container spaced-from-tb">
-            <div class="container">
-              <h1 class="display-6">Optional Attributes</h1>
-              <hr class="m-2">
-              <p class="mb-2">Style:</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Style" value="Sport" id="flexRadioSport">
-                <label class="form-check-label" for="flexRadioSport">
-                  Sport
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Style" value="Preppy" id="flexRadioPreppy">
-                <label class="form-check-label" for="flexRadioPreppy">
-                  Preppy
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Style" value="Boho" id="flexRadioBoho">
-                <label class="form-check-label" for="flexRadioBoho">
-                  Boho
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Style" value="Grunge" id="flexRadioGrunge">
-                <label class="form-check-label" for="flexRadioGrunge">
-                  Grunge
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Style" value="Streetwear" id="flexRadioStreetwear">
-                <label class="form-check-label" for="flexRadioStreetwear">
-                  Streetwear
-                </label>
-              </div>
-              <hr class="m-2">
+      </div>
 
-              <!-- Pattern Selection -->
-              <p class="mb-2">Pattern:</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Pattern" value="Plain" id="flexRadioPlain">
-                <label class="form-check-label" for="flexRadioPlain">
-                  Plain
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Pattern" value="Striped" id="flexRadioStriped">
-                <label class="form-check-label" for="flexRadioStriped">
-                  Striped
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Pattern" value="Graphic" id="flexRadioGraphic">
-                <label class="form-check-label" for="flexRadioGraphic">
-                  Graphic
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Pattern" value="Dots" id="flexRadioDots">
-                <label class="form-check-label" for="flexRadioDots">
-                  Dots
-                </label>
-              </div>
-              <hr class="m-2">
+      <!-- Optional attributes -->
+      <div class="col-md-6">
+        <div class="container spaced-from-tb">
+          <div class="container">
+            <h1 class="display-6">Optional Attributes</h1>
+            <hr class="m-2">
+            <p class="mb-2">Style:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Style" value="Sport" id="flexRadioSport">
+              <label class="form-check-label" for="flexRadioSport">
+                Sport
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Style" value="Preppy" id="flexRadioPreppy">
+              <label class="form-check-label" for="flexRadioPreppy">
+                Preppy
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Style" value="Boho" id="flexRadioBoho">
+              <label class="form-check-label" for="flexRadioBoho">
+                Boho
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Style" value="Grunge" id="flexRadioGrunge">
+              <label class="form-check-label" for="flexRadioGrunge">
+                Grunge
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Style" value="Streetwear" id="flexRadioStreetwear">
+              <label class="form-check-label" for="flexRadioStreetwear">
+                Streetwear
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Style" value="Null" id="flexRadioStyleNull" checked>
+              <label class="form-check-label" for="flexRadioStyleNull">
+                Null
+              </label>
+            </div>
+            <hr class="m-2">
 
-              <!-- Material Selection -->
-              <p class="mb-2">Material:</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Material" value="Cotton" id="flexRadioCotton">
-                <label class="form-check-label" for="flexRadioCotton">
-                  Cotton
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Material" value="Denim" id="flexRadioDenim">
-                <label class="form-check-label" for="flexRadioDenim">
-                  Denim
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Material" value="Leather" id="flexRadioLeather">
-                <label class="form-check-label" for="flexRadioLeather">
-                  Leather
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Material" value="Synthetic" id="flexRadioSynthetic">
-                <label class="form-check-label" for="flexRadioSynthetic">
-                  Synthetic
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Material" value="Wool" id="flexRadioWool">
-                <label class="form-check-label" for="flexRadioWool">
-                  Wool
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Material" value="Khaki" id="flexRadioKhaki">
-                <label class="form-check-label" for="flexRadioKhaki">
-                  Khaki
-                </label>
-              </div>
-              <hr class="m-2">
+            <!-- Pattern Selection -->
+            <p class="mb-2">Pattern:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Pattern" value="Plain" id="flexRadioPlain">
+              <label class="form-check-label" for="flexRadioPlain">
+                Plain
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Pattern" value="Striped" id="flexRadioStriped">
+              <label class="form-check-label" for="flexRadioStriped">
+                Striped
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Pattern" value="Graphic" id="flexRadioGraphic">
+              <label class="form-check-label" for="flexRadioGraphic">
+                Graphic
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Pattern" value="Dots" id="flexRadioDots">
+              <label class="form-check-label" for="flexRadioDots">
+                Dots
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Pattern" value="Null" id="flexRadioPatternNull" checked>
+              <label class="form-check-label" for="flexRadioPatternNull">
+                Null
+              </label>
+            </div>
+            <hr class="m-2">
 
+            <!-- Material Selection -->
+            <p class="mb-2">Material:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Cotton" id="flexRadioCotton">
+              <label class="form-check-label" for="flexRadioCotton">
+                Cotton
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Denim" id="flexRadioDenim">
+              <label class="form-check-label" for="flexRadioDenim">
+                Denim
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Leather" id="flexRadioLeather">
+              <label class="form-check-label" for="flexRadioLeather">
+                Leather
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Synthetic" id="flexRadioSynthetic">
+              <label class="form-check-label" for="flexRadioSynthetic">
+                Synthetic
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Wool" id="flexRadioWool">
+              <label class="form-check-label" for="flexRadioWool">
+                Wool
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Khaki" id="flexRadioKhaki">
+              <label class="form-check-label" for="flexRadioKhaki">
+                Khaki
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Material" value="Null" id="flexRadioMaterialNull" checked>
+              <label class="form-check-label" for="flexRadioMaterialNull">
+                Null
+              </label>
+            </div>
+            <hr class="m-2">
+            
               <!-- Color Selection -->
               <p class="mb-2">Color:</p>
               <div class="form-check">
@@ -291,63 +311,68 @@
                   Brown
                 </label>
               </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="White" id="flexRadioWhite">
-                <label class="form-check-label" for="flexRadioWhite">
-                  White
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Grey" id="flexRadioGrey">
-                <label class="form-check-label" for="flexRadioGrey">
-                  Grey
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Blue" id="flexRadioBlue">
-                <label class="form-check-label" for="flexRadioBlue">
-                  Blue
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Green" id="flexRadioGreen">
-                <label class="form-check-label" for="flexRadioGreen">
-                  Green
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Yellow" id="flexRadioYellow">
-                <label class="form-check-label" for="flexRadioYellow">
-                  Yellow
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Orange" id="flexRadioOrange">
-                <label class="form-check-label" for="flexRadioOrange">
-                  Orange
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Red" id="flexRadioRed">
-                <label class="form-check-label" for="flexRadioRed">
-                  Red
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Pink" id="flexRadioPink">
-                <label class="form-check-label" for="flexRadioPink">
-                  Pink
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Purple" id="flexRadioPurple">
-                <label class="form-check-label" for="flexRadioPurple">
-                  Purple
-                </label>
-              </div>
-              <br>
-              <br>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="White" id="flexRadioWhite">
+              <label class="form-check-label" for="flexRadioWhite">
+                White
+              </label>
             </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Grey" id="flexRadioGrey">
+              <label class="form-check-label" for="flexRadioGrey">
+                Grey
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Blue" id="flexRadioBlue">
+              <label class="form-check-label" for="flexRadioBlue">
+                Blue
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Green" id="flexRadioGreen">
+              <label class="form-check-label" for="flexRadioGreen">
+                Green
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Yellow" id="flexRadioYellow">
+              <label class="form-check-label" for="flexRadioYellow">
+                Yellow
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Orange" id="flexRadioOrange">
+              <label class="form-check-label" for="flexRadioOrange">
+                Orange
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Red" id="flexRadioRed">
+              <label class="form-check-label" for="flexRadioRed">
+                Red
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Pink" id="flexRadioPink">
+              <label class="form-check-label" for="flexRadioPink">
+                Pink
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Purple" id="flexRadioPurple">
+              <label class="form-check-label" for="flexRadioPurple">
+                Purple
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Null" id="flexRadioColorNull" checked>
+              <label class="form-check-label" for="flexRadioColorNull">
+                Null
+              </label>
+            </div>
+            </form>
+            <br>
           </div>
         </div>
       </div>
