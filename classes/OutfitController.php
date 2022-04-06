@@ -24,44 +24,45 @@ class OutfitController {
     public function run() {
         switch($this->command) {
             case "logout":
-                session_start();
+                // session_start();
                 $this->delete_session();
+                session_start();
                 $this->login();
                 break;
             case "login":
-                session_start();
+                // session_start();
                 $this->login();
                 break;
             case "create_account":
-                session_start();
+                // session_start();
                 $this->create_account();
                 break;  
             case "home":
-                session_start();
+                // session_start();
                 $this->home();
                 break;
             case "profile":
-                session_start();
+                // session_start();
                 $this->profile();
                 break;
             case "create_outfits":
-                session_start();
+                // session_start();
                 $this->create_outfits();
                 break;
             case "edit_clothes":
-                session_start();
+                // session_start();
                 $this->edit_clothes();
                 break;
             case "saved_outfits":
-                session_start();
+                // session_start();
                 $this->saved_outfits();
                 break;
             case "upload_clothes":
-                session_start();
+                // session_start();
                 $this->upload_clothes();
                 break;
             default:
-                session_start();
+                // session_start();
                 $this->login();
                 break;
         }
@@ -156,6 +157,21 @@ class OutfitController {
     }
 
     public function upload_clothes() {
+        $print = "";
+        if (isset($_POST["Name"])) {
+            $img = NULL;
+            if ($_FILES['article_img']['error'] == 0) {
+                $img = file_get_contents($_FILES['article_img']["tmp_name"]);
+            }
+
+            $insert = $this->db->query("insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
+            item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);", "sissssssb", $_POST["Name"], $_SESSION["uid"], 
+            $_POST["Formality"], $_POST["Type"], $_POST["Style"], $_POST["Pattern"], $_POST["Material"], $_POST["Color"], $img);
+
+            if ($insert === false) {
+                $error_msg = "Error inserting user";
+            }
+        }
         include("templates/upload_clothes.php");
     }
 }

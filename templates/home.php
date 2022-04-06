@@ -50,10 +50,9 @@
               </ul>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" autocomplete="on">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <span class="navbar-text">
+            Hello there, <?=$_SESSION["name"]?>!
+          </span>
         </div>
       </div>
     </nav>
@@ -81,10 +80,6 @@
   <div class="col-12" id="scroll-Div">
     <div class="container spaced-from-tb">
       <h1 class="display-6 underlined">Favorite Pieces</h1>
-      <?php
-        // print_r($_SESSION);
-        // print_r($data);
-      ?>
       <p>View your most frequently used pieces of clothing here.</p>
       <div class="row">
         <div class="container-fluid">
