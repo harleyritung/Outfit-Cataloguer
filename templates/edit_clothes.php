@@ -8,16 +8,14 @@
 
   <meta name="author" content="Nathan Hartung, Vivine Zheng">
   <meta name="description" content="A website for uploading clothing and generating outfits based on user input.">
-  <meta name="keywords"
-    content="outfit maker, outfit creator, outfit inspiration, outfit cataloguer, wardorbe organizer">
+  <meta name="keywords" content="outfit maker, outfit creator, outfit inspiration, outfit cataloguer, wardorbe organizer">
 
   <title>Outfit Cataloguer</title>
 
   <!-- Local CSS file -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
 <body">
@@ -26,8 +24,7 @@
     <nav id="topnav" class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="container-fluid">
         <a class="navbar-brand" href="?command=home">Outfit Cataloguer</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -36,8 +33,7 @@
               <a class="nav-link active" aria-current="page" href="?command=home">Home</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Settings
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -50,7 +46,7 @@
             </li>
           </ul>
           <span class="navbar-text">
-            Hello there, <?=$_SESSION["name"]?>!
+            Hello there, <?= $_SESSION["name"] ?>!
           </span>
         </div>
       </div>
@@ -78,51 +74,27 @@
   <!-- Page content begins -->
   <div class="col-md-8" id="scroll-Div">
     <div class="container spaced-from-tb">
+      <?php if (count($list_of_clothes) > 0) { ?>
+        <p class="m-2">Select a piece of clothing to edit.</p>
+        <div class="row">
+          <div class="container-fluid">
+            <?php foreach ($list_of_clothes as $article) : ?>
+              <a href="#" class="image-link">
+                <img src="images/200x200.svg" alt="Preview image of clothing article." class="img-thumbnail">
+              </a>
+            <?php endforeach; ?>
+            <br>
+            <br>
+          </div>
+        </div>
+      <?php
+      } else {
+        echo '<p class="m-2">No clothes have been uploaded to the database yet.</p>';
+      } ?>
+      <!-- Commenting out old code...
       <p class="m-2">Select a piece of clothing to edit.</p>
       <div class="row">
         <div class="container-fluid">
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
           <a href="#" class="image-link">
             <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
           </a>
@@ -133,6 +105,7 @@
           <br>
         </div>
       </div>
+      -->
       <br>
     </div>
   </div>
@@ -223,10 +196,8 @@
       </div>
     </nav>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
-</body>
+  </body>
 
 </html>

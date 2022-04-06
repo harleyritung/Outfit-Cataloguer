@@ -149,6 +149,8 @@ class OutfitController {
     }
 
     public function edit_clothes() {
+        $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
+        echo var_dump($list_of_clothes);
         include("templates/edit_clothes.php");
     }
 
