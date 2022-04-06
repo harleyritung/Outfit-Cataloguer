@@ -84,7 +84,7 @@
     <div class="col-md-4 file-upload-container">
       <div class="container spaced-from-tb">
         <h1 class="display-6 underlined ps-1">Upload Picture</h1>
-       <label for="image_input">Images can be no larger than 2mb.</label>
+       <label for="image_input">Images can be no larger than 2MB.</label>
         <div class="img-container">
           <input type="file" id="image_input" accept="image/jpeg, image/png" name="article_img">
           <div id="display_image"></div>
