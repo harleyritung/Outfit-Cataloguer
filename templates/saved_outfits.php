@@ -49,10 +49,9 @@
               </ul>
             </li>
           </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" autocomplete="on">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+          <span class="navbar-text">
+            Hello there, <?=$_SESSION["name"]?>!
+          </span>
         </div>
       </div>
     </nav>
@@ -79,6 +78,10 @@
   <!-- Page content begins -->
   <div class="col-12" id="scroll-Div">
     <div class="container spaced-from-tb">
+      <?php
+        // echo $city . ", " . $country;
+        print_r($location);
+      ?>
       <h1 class="display-6 underlined">Business Outfit.</h1>
       <p class="text-muted">#grey #business-casual #semi-formal</p>
       <div class="row">
