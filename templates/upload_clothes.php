@@ -77,12 +77,20 @@
     <form enctype="multipart/form-data" action="?command=upload_clothes" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
 
       <!-- Image upload -->
-      <div class="col-md-4 file-upload-container">
+      <div class="col-md-4">
         <div class="container spaced-from-tb">
           <h1 class="display-6 underlined ps-1">Upload Picture</h1>
+          <?php
+            if (!empty($error_msg)) {
+              echo "<div class='alert alert-danger'>$error_msg</div>";
+            }
+          ?>
           <label for="image_input" style="margin-bottom: 1rem;">Images can be no larger than 2 MB.</label>
+          <div class="input-group mb-3">
+              <input type="file" class="form-control" id="image_input" accept="image/jpeg, image/png, image/jpg" name="article_img">
+            </div>
           <div class="img-container">
-            <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg" name="article_img">
+            <!-- <input type="file" id="image_input" accept="image/jpeg, image/png, image/jpg" name="article_img"> -->
             <div id="display_image"></div>
           </div>
           <br>
@@ -103,7 +111,7 @@
             <!-- Article Name -->
             <div class="mb-2">
               <label for="ArticleName" class="form-label">Article Name:</label>
-              <input type="text" class="form-control" id="ArticleName" name="Name">
+              <input type="text" class="form-control" id="ArticleName" name="Name" placeholder="Name">
             </div>
             <hr class="m-2">
 
