@@ -79,7 +79,8 @@ class OutfitController
     }
 
     // Display the login page (and handle login logic)
-    private function login() {
+    private function login()
+    {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
@@ -107,8 +108,8 @@ class OutfitController
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
-                 $error_msg = "Error checking for user";
-            } 
+                $error_msg = "Error checking for user";
+            }
 
             // user already exists
             if (!empty($data)) {
@@ -120,16 +121,16 @@ class OutfitController
                     $pw_regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d!@#$%&*?]{8,}$/";
                     // password meets requirements
                     if (preg_match($pw_regex, $_POST["password1"]) === 1) {
-                        $insert = $this->db->query("insert into project_user (name, email, password) values (?, ?, ?);", 
-                        "sss", 
-                        $_POST["name"], 
-                        $_POST["email"], 
-                        password_hash($_POST["password1"], PASSWORD_DEFAULT));
+                        $insert = $this->db->query(
+                            "insert into project_user (name, email, password) values (?, ?, ?);",
+                            "sss",
+                            $_POST["name"],
+                            $_POST["email"],
+                            password_hash($_POST["password1"], PASSWORD_DEFAULT)
+                        );
                         if ($insert === false) {
                             $error_msg = "Error inserting user";
-                        } 
-                    
-                        else {
+                        } else {
                             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
                             $_SESSION["name"] = $_POST["name"];
                             $_SESSION["email"] = $_POST["email"];
@@ -161,18 +162,23 @@ class OutfitController
         include("templates/profile.php");
     }
 
-    public function edit_profile() {
+    public function edit_profile()
+    {
         // user edited profile
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["email"] = $_POST["email"];
             $_SESSION["name"] = $_POST["name"];
 
-            $update = $this->db->query("update project_user set email=?, name=? where uid=?;", "ssi", $_POST["email"], $_POST["name"], 
-            $_SESSION["uid"]);
+            $update = $this->db->query(
+                "update project_user set email=?, name=? where uid=?;",
+                "ssi",
+                $_POST["email"],
+                $_POST["name"],
+                $_SESSION["uid"]
+            );
             if ($update === false) {
                 $error_msg = "Error updating profile";
-            }
-            else {
+            } else {
                 header("Location: ?command=profile");
             }
         }
@@ -180,7 +186,8 @@ class OutfitController
     }
 
 
-    public function upload_clothes() {
+    public function upload_clothes()
+    {
         $status = $statusMsg = '';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $status = 'error';
@@ -212,9 +219,9 @@ class OutfitController
                         $_SESSION["uid"],
                         $_POST["Formality"],
                         $_POST["Type"],
-                        $optional_attrs["style"], 
-                        $optional_attrs["pattern"], 
-                        $optional_attrs["material"], 
+                        $optional_attrs["style"],
+                        $optional_attrs["pattern"],
+                        $optional_attrs["material"],
                         $optional_attrs["color"],
                         addslashes(file_get_contents($image))
                     );
@@ -226,7 +233,6 @@ class OutfitController
                         $statusMsg = "File upload failed, please try again.";
                     }
                 }
-
             }
         }
 
