@@ -43,6 +43,9 @@ class OutfitController
             case "profile":
                 $this->profile();
                 break;
+            case "edit_profile":
+                $this->edit_profile();
+                break;
             case "upload_clothes":
                 $this->upload_clothes();
                 break;
