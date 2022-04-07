@@ -79,9 +79,26 @@
         <div class="row">
           <div class="container-fluid">
             <?php foreach ($list_of_clothes as $article) : ?>
-              <a href="#" class="image-link">
+              <div class="col-md-3">
                 <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($article['item_image']); ?>" alt="Preview image of clothing article." width="200" height="200" class="img-thumbnail">
-              </a>
+                <div class="row" style="padding: 0.5rem 0rem;">
+                  <table>
+                    <tr>
+                      <td class="text-center">
+                        <form action="?command=edit_item" method="post">
+                          <input type="hidden" name="item_to_edit" value="<?php echo $article['item_id'] ?>" />
+                          <button class="btn btn-success submit-button" type="submit">Edit Item</button>
+                        </form>
+                      </td>
+                      <td>
+                        <form action="?command=remove_item" method="post">
+                          <input type="hidden" name="item_to_remove" value="<?php echo $article['item_id'] ?>" />
+                          <button class="btn btn-danger submit-button" type="submit">Remove</button>
+                        </form>
+                      </td>
+                  </table>
+                </div>
+              </div>
             <?php endforeach; ?>
             <br>
             <br>
@@ -175,6 +192,7 @@
             Shoes
           </label>
         </div>
+        <br>
         <br>
         <br>
       </div>

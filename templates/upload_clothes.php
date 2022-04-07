@@ -259,65 +259,77 @@
             </div>
             <hr class="m-2">
 
-            <!-- Material Selection -->
-            <p class="mb-2">Material:</p>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Cotton" id="flexRadioCotton">
-              <label class="form-check-label" for="flexRadioCotton">
-                Cotton
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Denim" id="flexRadioDenim">
-              <label class="form-check-label" for="flexRadioDenim">
-                Denim
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Leather" id="flexRadioLeather">
-              <label class="form-check-label" for="flexRadioLeather">
-                Leather
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Synthetic" id="flexRadioSynthetic">
-              <label class="form-check-label" for="flexRadioSynthetic">
-                Synthetic
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Wool" id="flexRadioWool">
-              <label class="form-check-label" for="flexRadioWool">
-                Wool
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Khaki" id="flexRadioKhaki">
-              <label class="form-check-label" for="flexRadioKhaki">
-                Khaki
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Material" value="Null" id="flexRadioMaterialNull" checked>
-              <label class="form-check-label" for="flexRadioMaterialNull">
-                Null
-              </label>
-            </div>
-            <hr class="m-2">
-
-            <!-- Color Selection -->
-            <p class="mb-2">Color:</p>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Color" value="Black" id="flexRadioBlack">
-              <label class="form-check-label" for="flexRadioBlack">
-                Black
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="Color" value="Brown" id="flexRadioBrown">
-              <label class="form-check-label" for="flexRadioBrown">
-                Brown
-              </label>
+              <!-- Color Selection -->
+              <p class="mb-2">Color:</p>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Black" id="flexRadioBlack">
+                <label class="form-check-label" for="flexRadioBlack">
+                  Black
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Brown" id="flexRadioBrown">
+                <label class="form-check-label" for="flexRadioBrown">
+                  Brown
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="White" id="flexRadioWhite">
+                <label class="form-check-label" for="flexRadioWhite">
+                  White
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Grey" id="flexRadioGrey">
+                <label class="form-check-label" for="flexRadioGrey">
+                  Grey
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Blue" id="flexRadioBlue">
+                <label class="form-check-label" for="flexRadioBlue">
+                  Blue
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Green" id="flexRadioGreen">
+                <label class="form-check-label" for="flexRadioGreen">
+                  Green
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Yellow" id="flexRadioYellow">
+                <label class="form-check-label" for="flexRadioYellow">
+                  Yellow
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Orange" id="flexRadioOrange">
+                <label class="form-check-label" for="flexRadioOrange">
+                  Orange
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Red" id="flexRadioRed">
+                <label class="form-check-label" for="flexRadioRed">
+                  Red
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Pink" id="flexRadioPink">
+                <label class="form-check-label" for="flexRadioPink">
+                  Pink
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Purple" id="flexRadioPurple">
+                <label class="form-check-label" for="flexRadioPurple">
+                  Purple
+                </label>
+              </div>
+              <br>
+              <br>
+              <br>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="Color" value="White" id="flexRadioWhite">
