@@ -48,21 +48,27 @@ class OutfitController
                 // session_start();
                 $this->profile();
                 break;
-            case "create_outfits":
+            case "upload_clothes":
                 // session_start();
-                $this->create_outfits();
+                $this->upload_clothes();
                 break;
             case "edit_clothes":
                 // session_start();
                 $this->edit_clothes();
                 break;
+            case "edit_item":
+                $this->edit_item();
+                break;
+            case "remove_item":
+                $this->remove_item();
+                break;
+            case "create_outfits":
+                // session_start();
+                $this->create_outfits();
+                break;
             case "saved_outfits":
                 // session_start();
                 $this->saved_outfits();
-                break;
-            case "upload_clothes":
-                // session_start();
-                $this->upload_clothes();
                 break;
             default:
                 // session_start();
@@ -154,22 +160,6 @@ class OutfitController
         include("templates/profile.php");
     }
 
-    public function create_outfits()
-    {
-        include("templates/create_outfits.php");
-    }
-
-    public function edit_clothes()
-    {
-        $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
-        include("templates/edit_clothes.php");
-    }
-
-    public function saved_outfits()
-    {
-        include("templates/saved_outfits.php");
-    }
-
     public function upload_clothes()
     {
         $print = "";
@@ -218,5 +208,77 @@ class OutfitController
         echo $statusMsg;
 
         include("templates/upload_clothes.php");
+    }
+
+    public function edit_clothes()
+    {
+        $list_of_clothes_json = $this->db->query("select item_name from project_article where uid = ?;", "s", $_SESSION["uid"]);
+        $list_of_clothes_json = json_encode($list_of_clothes_json);
+        echo $list_of_clothes_json;
+
+        $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
+        include("templates/edit_clothes.php");
+    }
+
+    public function edit_item()
+    {
+        $statusMsg = $status = '';
+        $status = 'error';
+        $item = $this->db->query("select * from project_article where item_id = ?;", "s", $_POST["item_to_edit"]);
+        $item = $item[0];
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update") {
+                $update = $this->db->query(
+                    "update project_article set item_name = ?, item_formality = ?, item_type = ?, item_style = ?, item_pattern = ?, 
+            item_material = ?, item_color = ? where item_id = ?;",
+                    "sssssssb",
+                    $_POST["Name"],
+                    $_POST["Formality"],
+                    $_POST["Type"],
+                    $_POST["Style"],
+                    $_POST["Pattern"],
+                    $_POST["Material"],
+                    $_POST["Color"],
+                    $_POST['item_to_edit']
+                );
+                if ($update) {
+                    $status = 'success';
+                    $statusMsg = "Article updated successfully.";
+                } else {
+                    $statusMsg = "Article update failed, please try again.";
+                }
+                echo $statusMsg;
+            }
+        }
+
+        include("templates/edit_item.php");
+    }
+
+    public function remove_item()
+    {
+        $statusMsg = $status = '';
+        $status = 'error';
+        $delete = $this->db->query("delete from project_article where item_id = ?;", "s", $_POST["item_to_remove"]);
+
+        if ($delete) {
+            $status = 'success';
+            $statusMsg = "Article deleted successfully.";
+        } else {
+            $statusMsg = "Article deletion failed, please try again.";
+        }
+
+        $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
+        header("Location: ?command=edit_clothes");
+    }
+
+    public function create_outfits()
+    {
+        include("templates/create_outfits.php");
+    }
+
+    public function saved_outfits()
+    {
+        include("templates/saved_outfits.php");
     }
 }

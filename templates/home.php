@@ -143,7 +143,7 @@
   <footer>
     <!-- Bottom nav -->
     <nav class="navbar fixed-bottom navbar-light bg-light" aria-label="breadcrumb">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding-top: 0.5rem;">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
