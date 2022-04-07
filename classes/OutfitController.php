@@ -112,7 +112,7 @@ class OutfitController
             // user doesn't exist
             else {
                 if ($_POST["password1"] === $_POST["password2"]) {
-                    $pw_regex = "/[a-zA-Z0-9!@#$%^&*,.?]{8,}/";
+                    $pw_regex = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d!@#$%&*?]{8,}$/";
                     // password meets requirements
                     if (preg_match($pw_regex, $_POST["password1"]) === 1) {
                         $insert = $this->db->query("insert into project_user (name, email, password) values (?, ?, ?);", 
@@ -120,14 +120,17 @@ class OutfitController
                         $_POST["name"], 
                         $_POST["email"], 
                         password_hash($_POST["password1"], PASSWORD_DEFAULT));
-                    if ($insert === false) {
-                        $error_msg = "Error inserting user";
-                    } else {
-                        $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
-                        $_SESSION["name"] = $_POST["name"];
-                        $_SESSION["email"] = $_POST["email"];
-                        $_SESSION["uid"] = $data[0]["uid"];
-                        header("Location: ?command=home");
+                        if ($insert === false) {
+                            $error_msg = "Error inserting user";
+                        } 
+                    
+                        else {
+                            $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
+                            $_SESSION["name"] = $_POST["name"];
+                            $_SESSION["email"] = $_POST["email"];
+                            $_SESSION["uid"] = $data[0]["uid"];
+                            header("Location: ?command=home");
+                        }
                     }
                     // password fails regex
                     else {

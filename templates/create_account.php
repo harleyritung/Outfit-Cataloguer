@@ -34,7 +34,7 @@
     </header>
 
     <div class="container" style="margin-top: 15px;">
-    <div class="row col-xs-8 text-center" style="float: none; width: auto"">
+    <div class="row col-xs-8 text-center" style="float: none; width: auto">
         <h1>Create an Account</h1>
         <p> Welcome to Outfit Cataloguer. To create an account, enter your information below.</p>
     </div>
@@ -57,7 +57,7 @@
             <div class="mb-3">
                 <p>
                     Password must be at least 8 characters, contain uppercase and lowercase letters, and have at least one of the 
-                    following special characters: !@#$%^&*,.?
+                    following special characters: !@#$%&*?
                 </p>
                 <label for="password1" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password1" name="password1"/>
