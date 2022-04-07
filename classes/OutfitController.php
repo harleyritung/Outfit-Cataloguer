@@ -73,9 +73,8 @@ class OutfitController
     }
 
     // Display the login page (and handle login logic)
-    private function login()
-    {
-        if (isset($_POST["email"])) {
+    private function login() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
                 $error_msg = "Error checking for user";
@@ -99,7 +98,7 @@ class OutfitController
 
     public function create_account()
     {
-        if (isset($_POST["email"])) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
             if ($data === false) {
                  $error_msg = "Error checking for user";
@@ -158,7 +157,7 @@ class OutfitController
 
     public function edit_profile() {
         // user edited profile
-        if (isset($_POST["email"])) {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["email"] = $_POST["email"];
             $_SESSION["name"] = $_POST["name"];
 
@@ -168,8 +167,7 @@ class OutfitController
                 $error_msg = "Error updating profile";
             }
             else {
-                $this->profile();
-                return;
+                header("Location: ?command=profile");
             }
         }
         include("templates/edit_profile.php");
@@ -179,75 +177,64 @@ class OutfitController
         include("templates/create_outfits.php");
     }
 
-    public function edit_clothes()
-    {
+    public function edit_clothes() {
         $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
         include("templates/edit_clothes.php");
     }
 
-    public function saved_outfits()
-    {
+    public function saved_outfits() {
         include("templates/saved_outfits.php");
     }
 
-    public function upload_clothes()
-    {
-        $print = "";
+    public function upload_clothes() {
         $status = $statusMsg = '';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $status = 'error';
             if (!empty($_FILES['article_img']['name'])) {
                 $fileName = basename($_FILES['article_img']['name']);
                 $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $image = $_FILES['article_img']['tmp_name'];
+                $imgContent = addslashes(file_get_contents($image));
 
-                // Allow certain file formats 
-                $allowTypes = array('jpg', 'jpeg', 'png');
-                if (in_array($fileType, $allowTypes)) {
-                    $image = $_FILES['article_img']['tmp_name'];
-                    $imgContent = addslashes(file_get_contents($image));
-
-                    if ($imgContent !== "") {
-                        // check for and set null values
-                        $optional_attrs = [
-                            "style" => $_POST["Style"],
-                            "pattern" => $_POST["Pattern"],
-                            "material" => $_POST["Material"],
-                            "color" => $_POST["Color"]
-                        ];
-                        foreach ($optional_attrs as $key => $value) {
-                            if ($value === "Null") {
-                                $optional_attrs[$key] = NULL;
-                            }
-                        }
-                        // Insert image content into database 
-                        $insert = $this->db->query(
-                            "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
-                            item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                            "sissssssb",
-                            $_POST["Name"],
-                            $_SESSION["uid"],
-                            $_POST["Formality"],
-                            $_POST["Type"],
-                            $optional_attrs["style"], 
-                            $optional_attrs["pattern"], 
-                            $optional_attrs["material"], 
-                            $optional_attrs["color"],
-                            addslashes(file_get_contents($image))
-                        );
-
-                        if ($insert) {
-                            $status = 'success';
-                            $statusMsg = "File uploaded successfully.";
-                        } else {
-                            $statusMsg = "File upload failed, please try again.";
+                if ($imgContent !== "") {
+                    // check for and set null values
+                    $optional_attrs = [
+                        "style" => $_POST["Style"],
+                        "pattern" => $_POST["Pattern"],
+                        "material" => $_POST["Material"],
+                        "color" => $_POST["Color"]
+                    ];
+                    foreach ($optional_attrs as $key => $value) {
+                        if ($value === "Null") {
+                            $optional_attrs[$key] = NULL;
                         }
                     }
-                } else {
-                    $statusMsg = 'Sorry, only JPG, JPEG, & PNG files are allowed to upload.';
+                    // Insert image content into database 
+                    $insert = $this->db->query(
+                        "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
+                        item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                        "sissssssb",
+                        $_POST["Name"],
+                        $_SESSION["uid"],
+                        $_POST["Formality"],
+                        $_POST["Type"],
+                        $optional_attrs["style"], 
+                        $optional_attrs["pattern"], 
+                        $optional_attrs["material"], 
+                        $optional_attrs["color"],
+                        addslashes(file_get_contents($image))
+                    );
+
+                    if ($insert) {
+                        $status = 'success';
+                        $statusMsg = "File uploaded successfully.";
+                    } else {
+                        $statusMsg = "File upload failed, please try again.";
+                    }
                 }
+
             }
         }
-        echo $statusMsg;
 
         include("templates/upload_clothes.php");
     }
