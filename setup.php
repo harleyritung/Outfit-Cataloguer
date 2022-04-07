@@ -8,9 +8,11 @@ spl_autoload_register(function ($classname) {
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $db = new mysqli(Config::$db["host"], Config::$db["user"], Config::$db["pass"], Config::$db["database"]);
 
+$db->query('SET foreign_key_checks = 0');
+
+$db->query("drop table if exists project_user;");
 $db->query("drop table if exists project_article;");
 $db->query("drop table if exists project_outfit;");
-$db->query("drop table if exists project_user;");
 
 $db->query(
     "create table project_user (
@@ -39,7 +41,6 @@ $db->query(
     );"
 );
 
-// need to add foreign keys for item ids
 $db->query(
     "create table project_outfit (
     outfit_id int not null auto_increment,
@@ -51,3 +52,5 @@ $db->query(
     foreign key (item_id) references project_article (item_id)
     );"
 );
+
+$db->query('SET foreign_key_checks = 1');

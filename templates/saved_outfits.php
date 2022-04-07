@@ -78,10 +78,6 @@
   <!-- Page content begins -->
   <div class="col-12" id="scroll-Div">
     <div class="container spaced-from-tb">
-      <?php
-        // echo $city . ", " . $country;
-        // print_r($location);
-      ?>
       <h1 class="display-6 underlined">Business Outfit.</h1>
       <p class="text-muted">#grey #business-casual #semi-formal</p>
       <div class="row">

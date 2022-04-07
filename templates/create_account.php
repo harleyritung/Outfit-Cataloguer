@@ -14,7 +14,7 @@
   <title>Outfit Cataloguer</title>
 
   <!-- Local CSS file -->
-  <!-- <link rel="stylesheet" href="styles/main.css"> -->
+  <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> 
 </head>
@@ -24,7 +24,7 @@
     <!-- Home and settings navbar -->
     <nav id="topnav" class="navbar navbar-expand-lg navbar-light bg-transparent">
       <div class="container-fluid">
-        <a class="navbar-brand" href="?command=create_account">Outfit Cataloguer</a>
+        <a class="navbar-brand" href="?command=login">Outfit Cataloguer</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -34,13 +34,12 @@
     </header>
 
     <div class="container" style="margin-top: 15px;">
-    <div class="row col-xs-8 text-center">
+    <div class="row col-xs-8 text-center" style="float: none; width: auto">
         <h1>Create an Account</h1>
         <p> Welcome to Outfit Cataloguer. To create an account, enter your information below.</p>
     </div>
     <div class="row justify-content-center">
         <?php
-            // print_r($_SESSION);
             if (!empty($error_msg)) {
                 echo "<div class='alert alert-danger'>$error_msg</div>";
             }
@@ -56,6 +55,10 @@
                 <input type="text" class="form-control" id="name" name="name"/>
             </div>
             <div class="mb-3">
+                <p>
+                    Password must be at least 8 characters, contain uppercase and lowercase letters, and have at least one of the 
+                    following special characters: !@#$%&*?
+                </p>
                 <label for="password1" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password1" name="password1"/>
             </div>
@@ -76,6 +79,7 @@
             <div class="container-fluid">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="?command=login">Login</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><a class="active-link"
                     href="?command=create_account">Create Account</a></li>
                 </ol>
