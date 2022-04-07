@@ -72,7 +72,7 @@
   </header>
 
   <!-- content -->
-  <section>
+<section>
     <!-- Upload clothes form -->
     <form enctype="multipart/form-data" action="?command=upload_clothes" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
 
@@ -91,83 +91,83 @@
         </div>
       </div>
 
-      <!-- Attribute selection -->
-      <div class="col-md-8" id="scroll-Div" style="padding-bottom: 2rem;">
-        <!-- Required attributes -->
-        <div class="col-md-6">
-          <div class="container spaced-from-tb">
-            <div class="container">
-              <h1 class="display-6">Required Attributes</h1>
-              <hr class="m-2">
+  <!-- Attribute selection -->
+  <div class="col-md-8" id="scroll-Div" style="padding-bottom: 2rem;">
+      <!-- Required attributes -->
+      <div class="col-md-6">
+        <div class="container spaced-from-tb">
+          <div class="container">
+            <h1 class="display-6">Required Attributes</h1>
+            <hr class="m-2">
 
-              <!-- Article Name -->
-              <div class="mb-2">
-                <label for="ArticleName" class="form-label">Article Name:</label>
-                <input type="text" class="form-control" id="ArticleName" name="Name" style="margin-bottom: 1rem;">
-              </div>
-              <hr class="m-2">
-
-              <!-- Formality -->
-              <p class="mb-2">Formality:</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Formality" value="Casual" id="flexRadioCasual">
-                <label class="form-check-label" for="flexRadioCasual">
-                  Casual
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Formality" value="BusinessCasual" id="flexRadioBusinessCasual">
-                <label class="form-check-label" for="flexRadioBusinessCasual">
-                  Business casual
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Formality" value="SemiFormal" id="flexRadioSemiFormal">
-                <label class="form-check-label" for="flexRadioSemiFormal">
-                  Semi-formal
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Formality" value="Formal" id="flexRadioFormal">
-                <label class="form-check-label" for="flexRadioFormal">
-                  Formal
-                </label>
-              </div>
-              <hr class="m-2">
-
-              <!-- Type Selection -->
-              <p class="mb-2">Type:</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Type" value="Top" id="flexRadioTop">
-                <label class="form-check-label" for="flexRadioTop">
-                  Top
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Type" value="Bottom" id="flexRadioBottom">
-                <label class="form-check-label" for="flexRadioBottom">
-                  Bottom
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Type" value="FullBody" id="flexRadioFullBody">
-                <label class="form-check-label" for="flexRadioFullyBody">
-                  Full body
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Type" value="Accessory" id="flexRadioAccessory">
-                <label class="form-check-label" for="flexRadioAccessory">
-                  Accessory
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Type" value="Shoes" id="flexRadioShoes">
-                <label class="form-check-label" for="flexRadioShoes">
-                  Shoes
-                </label>
-              </div>
+            <!-- Article Name -->
+            <div class="mb-2">
+              <label for="ArticleName" class="form-label">Article Name:</label>
+              <input type="text" class="form-control" id="ArticleName" name="Name">
             </div>
+            <hr class="m-2">
+
+            <!-- Formality Selection -->
+            <p class="mb-2">Formality:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Formality" value="Casual" id="flexRadioCasual">
+              <label class="form-check-label" for="flexRadioCasual">
+                Casual
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Formality" value="BusinessCasual" id="flexRadioBusinessCasual">
+              <label class="form-check-label" for="flexRadioBusinessCasual">
+                Business casual
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Formality" value="SemiFormal" id="flexRadioSemiFormal">
+              <label class="form-check-label" for="flexRadioSemiFormal">
+                Semi-formal
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Formality" value="Formal" id="flexRadioFormal">
+              <label class="form-check-label" for="flexRadioFormal">
+                Formal
+              </label>
+            </div>
+            <hr class="m-2">
+
+            <!-- Type Selection -->
+            <p class="mb-2">Type:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Type" value="Top" id="flexRadioTop">
+              <label class="form-check-label" for="flexRadioTop">
+                Top
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Type" value="Bottom" id="flexRadioBottom">
+              <label class="form-check-label" for="flexRadioBottom">
+                Bottom
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Type" value="FullBody" id="flexRadioFullBody">
+              <label class="form-check-label" for="flexRadioFullBody">
+                Full body
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Type" value="Accessory" id="flexRadioAccessory">
+              <label class="form-check-label" for="flexRadioAccessory">
+                Accessory
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Type" value="Shoes" id="flexRadioShoes">
+              <label class="form-check-label" for="flexRadioShoes">
+                Shoes
+              </label>
+            </div>
+            <hr class="m-2">
           </div>
         </div>
       </div>
@@ -226,9 +226,9 @@
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="Pattern" value="Striped" id="flexRadioStriped">
-              <label class="form-check-label" for="flexRadioStriped">
-                Striped
+              <input class="form-check-input" type="radio" name="Pattern" value="Stripes" id="flexRadioStripes">
+              <label class="form-check-label" for="flexRadioStripes">
+                Stripes
               </label>
             </div>
             <div class="form-check">
@@ -296,21 +296,21 @@
               </label>
             </div>
             <hr class="m-2">
-            
-              <!-- Color Selection -->
-              <p class="mb-2">Color:</p>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Black" id="flexRadioBlack">
-                <label class="form-check-label" for="flexRadioBlack">
-                  Black
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Color" value="Brown" id="flexRadioBrown">
-                <label class="form-check-label" for="flexRadioBrown">
-                  Brown
-                </label>
-              </div>
+
+            <!-- Color Selection -->
+            <p class="mb-2">Color:</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Black" id="flexRadioBlack">
+              <label class="form-check-label" for="flexRadioBlack">
+                Black
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="Color" value="Brown" id="flexRadioBrown">
+              <label class="form-check-label" for="flexRadioBrown">
+                Brown
+              </label>
+            </div>
             <div class="form-check">
               <input class="form-check-input" type="radio" name="Color" value="White" id="flexRadioWhite">
               <label class="form-check-label" for="flexRadioWhite">
@@ -371,11 +371,11 @@
                 Null
               </label>
             </div>
-            </form>
+            <br>
           </div>
         </div>
       </div>
-    </form>
+    </div>
   </section>
 
   <footer>
