@@ -243,7 +243,6 @@ class OutfitController
     {
         $list_of_clothes_json = $this->db->query("select item_name from project_article where uid = ?;", "s", $_SESSION["uid"]);
         $list_of_clothes_json = json_encode($list_of_clothes_json);
-        // echo $list_of_clothes_json;
 
         $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
         include("templates/edit_clothes.php");
