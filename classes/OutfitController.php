@@ -1,5 +1,7 @@
 <?php
 
+define ('SITE_ROOT', realpath(dirname(__FILE__)));
+
 class OutfitController
 {
     private $command;
@@ -122,7 +124,6 @@ class OutfitController
                         if ($insert === false) {
                             $error_msg = "Error inserting user";
                         } 
-                    
                         else {
                             $data = $this->db->query("select * from project_user where email = ?;", "s", $_POST["email"]);
                             $_SESSION["name"] = $_POST["name"];
@@ -187,52 +188,52 @@ class OutfitController
     }
 
     public function upload_clothes() {
-        $status = $statusMsg = '';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $status = 'error';
-            if (!empty($_FILES['article_img']['name'])) {
-                $fileName = basename($_FILES['article_img']['name']);
-                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
-                $image = $_FILES['article_img']['tmp_name'];
-                $imgContent = addslashes(file_get_contents($image));
-
-                if ($imgContent !== "") {
-                    // check for and set null values
-                    $optional_attrs = [
-                        "style" => $_POST["Style"],
-                        "pattern" => $_POST["Pattern"],
-                        "material" => $_POST["Material"],
-                        "color" => $_POST["Color"]
-                    ];
-                    foreach ($optional_attrs as $key => $value) {
-                        if ($value === "Null") {
-                            $optional_attrs[$key] = NULL;
-                        }
-                    }
-                    // Insert image content into database 
-                    $insert = $this->db->query(
-                        "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
-                        item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                        "sissssssb",
-                        $_POST["Name"],
-                        $_SESSION["uid"],
-                        $_POST["Formality"],
-                        $_POST["Type"],
-                        $optional_attrs["style"], 
-                        $optional_attrs["pattern"], 
-                        $optional_attrs["material"], 
-                        $optional_attrs["color"],
-                        addslashes(file_get_contents($image))
-                    );
-
-                    if ($insert) {
-                        $status = 'success';
-                        $statusMsg = "File uploaded successfully.";
-                    } else {
-                        $statusMsg = "File upload failed, please try again.";
+            if (!empty($_FILES['article_img']['tmp_name'])) {
+                // print_r($_FILES);
+                $img_name = basename($_FILES['article_img']['tmp_name']); 
+                // echo "site root: " . SITE_ROOT;
+                $img_uploaded = move_uploaded_file($_FILES['article_img']['tmp_name'], SITE_ROOT . "/../images/$img_name");                    
+            }
+            else {
+                $img_name = NULL;
+            }
+            // if user is trying to submit an image and it isn't uploaded
+            if (!$img_uploaded && ($img_name !== NULL)) {
+                $error_msg = "Error uploading image, please try again.";
+            } 
+            // image uploaded successfully or no image submitted
+            else {
+                // change optional attrs to NULL instead of "Null" if applicable
+                $optional_attrs = [
+                    "style" => $_POST["Style"],
+                    "pattern" => $_POST["Pattern"],
+                    "material" => $_POST["Material"],
+                    "color" => $_POST["Color"]
+                ];
+                foreach ($optional_attrs as $key => $value) {
+                    if ($value === "Null") {
+                        $optional_attrs[$key] = NULL;
                     }
                 }
-
+                // Insert into db
+                $insert = $this->db->query(
+                    "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
+                    item_material, item_color, item_image_path) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+                    "sisssssss",
+                    $_POST["Name"],
+                    $_SESSION["uid"],
+                    $_POST["Formality"],
+                    $_POST["Type"],
+                    $optional_attrs["style"], 
+                    $optional_attrs["pattern"], 
+                    $optional_attrs["material"], 
+                    $optional_attrs["color"],
+                    $img_name
+                );
+                if (!$insert) {
+                    $error_msg = "File upload failed, please try again.";
+                }
             }
         }
 

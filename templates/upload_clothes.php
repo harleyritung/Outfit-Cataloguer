@@ -73,6 +73,11 @@
 
   <!-- content -->
 <section>
+<?php
+ 
+ echo "<img src= " . SITE_ROOT . "/../images/phpddAWov >"; 
+
+ ?>  
     <!-- Upload clothes form -->
     <form enctype="multipart/form-data" action="?command=upload_clothes" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
 
@@ -81,11 +86,11 @@
         <div class="container spaced-from-tb">
           <h1 class="display-6 underlined ps-1">Upload Picture</h1>
           <?php
-            if (!empty($error_msg)) {
+            if (isset($error_msg)) {
               echo "<div class='alert alert-danger'>$error_msg</div>";
             }
           ?>
-          <label for="image_input" style="margin-bottom: 1rem;">Images can be no larger than 2 MB.</label>
+          <label for="image_input" style="margin-bottom: 1rem;">Images can be no larger than 2MB.</label>
           <div class="input-group mb-3">
               <input type="file" class="form-control" id="image_input" accept="image/jpeg, image/png, image/jpg" name="article_img">
             </div>

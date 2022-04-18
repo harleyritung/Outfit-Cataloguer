@@ -35,7 +35,7 @@ $db->query(
     item_pattern text,
     item_material text, 
     item_color text,    
-    item_image longblob, 
+    item_image_path text, 
     primary key (item_id),
     foreign key (uid) references project_user (uid)
     );"

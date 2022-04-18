@@ -6,7 +6,7 @@ image_input.addEventListener("change", function() {
      const uploaded_image = reader.result;
      // alert if img larger than 2mb
      if (this.files[0].size > 2097152) {
-        alert("Uploaded image cannot be greater than 2mb");
+        alert("Error: Uploaded image cannot be greater than 2MB. Please select another image.");
     }
     // else display img
     else {
