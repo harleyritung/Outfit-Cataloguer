@@ -45,7 +45,7 @@
             }
         ?>
         <div class="col-4">
-        <form action="?command=create_account" method="post">
+        <form action="?command=create_account" method="post" onsubmit="return validate('email', 'name', 'password1', 'password2');">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email"/>
