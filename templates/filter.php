@@ -27,7 +27,7 @@
     </label>
 </div>
 
-<div hidden>
+<div>
     <!-- Type Filtering -->
     <hr class="m-2">
     <p class="mb-2">Type</p>
