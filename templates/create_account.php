@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
     <body>
@@ -53,6 +54,7 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name"/>
+                <div id="nameError" class="form-text" style="color:red;"></div>
             </div>
             <div class="mb-3">
                 <p>
@@ -61,10 +63,12 @@
                 </p>
                 <label for="password1" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password1" name="password1"/>
+                <div id="pw1Error" class="form-text" style="color:red;"></div>
             </div>
             <div class="mb-3">
                 <label for="password2" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="password2" name="password2"/>
+                <div id="pw2Error" class="form-text" style="color:red;"></div>
             </div>
             <div class="text-center">                
                 <button type="submit" class="btn btn-primary">Create Account</button>
@@ -88,7 +92,34 @@
             </div>
         </nav>
         </footer>
-        <script src="js/main.js"></script></body>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            // name regex
+            var regex = new RegExp("[^a-zA-Z' -]");
+            // regex = new RegExp('!@#$%^&*(){}[]~`:;\d<>,.?/|=+_"');
+            $("#name").keyup(() => {
+            // if name contains something other than letters, -, or '
+            if (regex.test($("#name").val())) {
+                $("#nameError").text("⚠ Name cannot contain special characters.");
+            }
+            else {
+                $("#nameError").text("");
+            }
+            });
+
+            // check passwords match
+            $("#password2").focusout(function() {
+                var pw1Val = $("#password1").val();
+                var pw2Val = $(this).val();
+                if (pw1Val != pw2Val) {
+                    $("#pw2Error").text("⚠ Passwords must match");
+                }
+                else {
+                    console.log("hi");
+                    $("#pw2Error").text("");
+                }
+            });
+        </script>
     </body>
 </html>
