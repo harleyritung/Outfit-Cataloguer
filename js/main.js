@@ -3,9 +3,9 @@ function validate() {
     var loopret = false;
     var finalret = true;
     var eles;
-    for (var i=0; i<arguments.length; i++) {
+    for (var i = 0; i < arguments.length; i++) {
         // get all elements in arguments
-        eles = document.querySelectorAll('input[name='+arguments[i]+']');
+        eles = document.querySelectorAll('input[name=' + arguments[i] + ']');
         loopret = false;
         for (var ele of eles) {
             // if input is type text
@@ -20,7 +20,7 @@ function validate() {
                     loopret = true;
                 }
             }
-        finalret = finalret && loopret;
+            finalret = finalret && loopret;
         }
     }
 

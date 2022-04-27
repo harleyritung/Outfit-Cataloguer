@@ -178,9 +178,9 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 10px;
- }
- 
- #display_image {
+}
+
+#display_image {
     min-width: 100%;
     height: 300px;
     border: 1px solid black;

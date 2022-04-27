@@ -43,8 +43,8 @@ class OutfitController
             case "profile":
                 $this->profile();
                 break;
-            case "edit_profile":
-                $this->edit_profile();
+            case "profile":
+                $this->profile();
                 break;
             case "upload_clothes":
                 $this->upload_clothes();
@@ -175,7 +175,8 @@ class OutfitController
         include("templates/home.php");
     }
 
-    public function profile() {
+    public function profile()
+    {
         // user edited profile
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST["email"])) {
@@ -368,7 +369,6 @@ class OutfitController
 
         header("Content-type: application/json");
         echo json_encode($arr[0], JSON_PRETTY_PRINT);
-        
     }
     public function filter_businesscasual()
     {
