@@ -157,7 +157,7 @@
     });
 
     // name regex
-    regex = new RegExp("[^a-zA-Z' -]");
+    var regex = new RegExp("[^a-zA-Z' -]");
     // regex = new RegExp('!@#$%^&*(){}[]~`:;\d<>,.?/|=+_"');
     $("#name").keyup(() => {
       // if name contains something other than letters, -, or '
