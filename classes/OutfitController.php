@@ -157,34 +157,29 @@ class OutfitController
         include("templates/home.php");
     }
 
-    public function profile()
-    {
-        include("templates/profile.php");
-    }
-
-    public function edit_profile()
-    {
+    public function profile() {
         // user edited profile
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $_SESSION["email"] = $_POST["email"];
-            $_SESSION["name"] = $_POST["name"];
+            if (isset($_POST["email"])) {
+                $_SESSION["email"] = $_POST["email"];
+            }
+            if (isset($_POST["name"])) {
+                $_SESSION["name"] = $_POST["name"];
+            }
 
             $update = $this->db->query(
                 "update project_user set email=?, name=? where uid=?;",
                 "ssi",
-                $_POST["email"],
-                $_POST["name"],
+                $_SESSION["email"],
+                $_SESSION["name"],
                 $_SESSION["uid"]
             );
             if ($update === false) {
                 $error_msg = "Error updating profile";
-            } else {
-                header("Location: ?command=profile");
             }
         }
-        include("templates/edit_profile.php");
+        include("templates/profile.php");
     }
-
 
     public function upload_clothes()
     {

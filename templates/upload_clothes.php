@@ -399,8 +399,27 @@
       </div>
     </nav>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-  <script src="js/main.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript">
+    // Displays image after using file input
+    const image_input = document.querySelector("#image_input");
+    image_input.addEventListener("change", function() {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        const uploaded_image = reader.result;
+        // alert if img larger than 2mb
+        if (this.files[0].size > 2097152) {
+            alert("Uploaded image cannot be greater than 2mb");
+        }
+        // else display img
+        else {
+        document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+        }
+    });
+      reader.readAsDataURL(this.files[0]);
+    });
+  </script>
 </body>
 
 </html>
