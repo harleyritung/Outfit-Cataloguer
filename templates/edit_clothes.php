@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php
+$list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (!empty($_POST["searchBtn"])) {
+    $list_of_clothes = $this->db->query("select * from project_article where item_name like '%" . $_POST["searchValue"] . "%' and uid=" . $_SESSION["uid"]);
+  }
+}
+?>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,20 +34,30 @@
       }
     }
 
-    function switchMode() {
-      if (document.getElementById("searching").hidden === true) {
-        document.getElementById("filtering").hidden = true;
-        document.getElementById("searching").hidden = false;
-      } else {
-        document.getElementById("filtering").hidden = false;
-        document.getElementById("searching").hidden = true;
+    function switchToSearch() {
+      var ajax = new XMLHttpRequest();
+      ajax.onload = function() {
+        document.getElementById("search-or-filter").innerHTML = this.responseText;
       }
+      ajax.open("GET", "templates/search.php", true);
+      ajax.send();
+    }
+
+    function switchToFilter() {
+      var ajax = new XMLHttpRequest();
+      ajax.onload = function() {
+        document.getElementById("search-or-filter").innerHTML = this.responseText;
+      }
+      ajax.open("GET", "templates/filter.php", true);
+      ajax.send();
     }
 
     function filter_casual() {
       var ajax = new XMLHttpRequest();
-      ajax.open("GET", "?command=filter_casual", true);
-      ajax.responseType = "json";
+      ajax.onload = function() {
+        document.getElementById("viewAll").innerHTML = this.responseText;
+      }
+      ajax.open("GET", "search.php", true);
       ajax.send();
 
       ajax.addEventListener("load", function() {
@@ -165,90 +185,20 @@
   <div class="col-xl-4 col-md col-sm">
     <div class="container spaced-from-tb">
       <div class="container">
-        <div id="searching" hidden>
+        <div id="search-or-filter">
           <h1 class="display-6">Search Mode</h1>
           <p>Search for an article by name...</p>
           <form method="post">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Enter your search here..." id="searchValue" name="searchValue" onkeypress="checkForEnter(event)" onkeyup="search()" />
-              <input type="submit" class="btn btn-primary" value="Search" id="searchBtn" name="searchBtn" onclick="search()" />
+              <input type="text" class="form-control" placeholder="Enter your search here..." id="searchValue" name="searchValue" onkeypress="checkForEnter(event)" />
+              <input type="submit" class="btn btn-primary" value="Search" id="searchBtn" name="searchBtn" />
             </div>
           </form>
           <br>
           <div class="text-end">
-            <button type="button" class="btn btn-warning" onclick="switchMode();">Switch to Filter Mode</button>
+            <button type="button" class="btn btn-warning" onclick="switchToFilter();">Switch to Filter Mode</button>
           </div>
           <br>
-        </div>
-        <div id="filtering">
-          <h1 class="display-6">Filter Mode</h1>
-          <p>Filter by:</p>
-          <hr class="m-2">
-          <p class="mb-2">Formality</p>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckCasual" onclick="filter_casual()">
-            <label class="form-check-label" for="flexCheckCasual">
-              Casual
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckBusinessCasual" onclick="filter_businesscasual()">
-            <label class="form-check-label" for="flexCheckBusinessCasual">
-              Business casual
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckSemiFormal" onclick="filter_semiformal()">
-            <label class="form-check-label" for="flexCheckSemiFormal">
-              Semi-formal
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckFormal" onclick="filter_formal()">
-            <label class="form-check-label" for="flexCheckFormal">
-              Formal
-            </label>
-          </div>
-
-          <div hidden>
-            <!-- Type Filtering -->
-            <hr class="m-2">
-            <p class="mb-2">Type</p>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckTop" onclick="filterTop()">
-              <label class="form-check-label" for="flexCheckTop">
-                Top
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckBottom" onclick="filterBottom()">
-              <label class="form-check-label" for="flexCheckBottom">
-                Bottom
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckDefault" onclick="filterFullbody()">
-              <label class="form-check-label" for="flexCheckDefault">
-                Full body
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckAccessory" onclick="filterAccessory()">
-              <label class="form-check-label" for="flexCheckAccessory">
-                Accessory
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckShoes" onclick="filterShoes()">
-              <label class="form-check-label" for="flexCheckShoes">
-                Shoes
-              </label>
-            </div>
-          </div>
-          <br>
-          <div class="text-end">
-            <button type="button" class="btn btn-warning" onclick="switchMode();">Switch to Search Mode</button>
-          </div>
         </div>
         <br>
         <br>
