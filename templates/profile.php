@@ -99,6 +99,7 @@
         <label for="name" class="col-sm-1 col-form-label">Name:</label>
         <div class="col-sm-5">
           <input class="form-control" type="text" id="name" name="name" value="<?=$_SESSION["name"]?>" disabled readonly>
+          <div id="inputHelp" class="form-text" style="color:red;"></div>
         </div>
         <!-- edit button -->
         <div class="col-md-1">
@@ -153,6 +154,19 @@
           $(this).css("display", "");
         })
       })
+    });
+
+    // name regex
+    regex = new RegExp("[^a-zA-Z' -]");
+    // regex = new RegExp('!@#$%^&*(){}[]~`:;\d<>,.?/|=+_"');
+    $("#name").keyup(() => {
+      // if name contains something other than letters, -, or '
+      if (regex.test($("#name").val())) {
+        $("#inputHelp").text("⚠ Name cannot contain special characters.");
+      }
+      else {
+        $("#inputHelp").text("");
+      }
     });
   </script>
 </body>
