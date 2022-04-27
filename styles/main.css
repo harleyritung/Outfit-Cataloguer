@@ -144,15 +144,15 @@ body {
 /* file drag and drop */
 .drop-zone {
     border: 1px solid black;
-    width:  200px;
+    width: 200px;
     height: 200px;
     padding-left: 0.25rem;
     padding-top: 0.25rem;
     margin-top: 1rem;
     margin-left: 10px;
-  }
+}
 
-  /* drag and drop box placeholder text */
+/* drag and drop box placeholder text */
 .drop-zone-text {
     opacity: .5;
     justify-content: center;
@@ -169,26 +169,26 @@ body {
     background-color: transparent;
 }
 
-.submit-button:hover{
+.submit-button:hover {
     background-color: lightgray;
 }
 
-.img-container{
+.img-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
  }
  
- #display_image{
+ #display_image {
     min-width: 100%;
     height: 300px;
     border: 1px solid black;
     background-position: center;
     background-size: cover;
- }
+}
 
- .flex-container {
+.flex-container {
     display: flex;
     flex-direction: row;
-  }
+}
