@@ -16,9 +16,48 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script type="text/javascript">
+    function checkForEnter(key) {
+      if (key.keyCode == 13) {
+        key.preventDefault();
+      }
+    }
+
+    function switchMode() {
+      if (document.getElementById("searching").hidden === true) {
+        document.getElementById("filtering").hidden = true;
+        document.getElementById("searching").hidden = false;
+      } else {
+        document.getElementById("filtering").hidden = false;
+        document.getElementById("searching").hidden = true;
+      }
+    }
+
+    function filter_casual() {
+      var ajax = new XMLHttpRequest();
+      ajax.open("GET", "?command=filter_casual", true);
+      ajax.responseType = "json";
+      ajax.send();
+
+      ajax.addEventListener("load", function() {
+        if (this.status == 200) { // worked 
+          list_of_clothes = this.response;
+          document.write(list_of_clothes);
+          displaySearch();
+        }
+      });
+    }
+
+    function displaySearch() {
+      document.getElementById("viewAll").hidden = true;
+      document.getElementById("searchResult").hidden = false;
+      document.getElementById("searchResult").innerHTML = list_of_clothes;
+    }
+  </script>
 </head>
 
-<body">
+<body>
   <header class="col-12">
     <!-- Home and settings navbar -->
     <nav id="topnav" class="navbar navbar-expand-lg navbar-light bg-transparent">
@@ -72,125 +111,144 @@
   </header>
 
   <!-- Page content begins -->
-  <div class="col-md-8" id="scroll-Div">
+  <div class="col-xl-8" id="scroll-Div">
     <div class="container spaced-from-tb">
       <?php if (count($list_of_clothes) > 0) { ?>
         <p class="m-2">Select a piece of clothing to edit.</p>
         <div class="row">
-          <div class="container-fluid">
+          <div class="container-fluid" id="viewAll">
             <?php foreach ($list_of_clothes as $article) : ?>
-              <div class="col-md-3">
-                <img src="data:image/jpg;charset=utf8;base64,<?php echo base64_encode($article['item_image']); ?>" alt="Preview image of clothing article." width="200" height="200" class="img-thumbnail">
-                <div class="row" style="padding: 0.5rem 0rem;">
-                  <table>
-                    <tr>
-                      <td class="text-center">
-                        <form action="?command=edit_item" method="post">
-                          <input type="hidden" name="item_to_edit" value="<?php echo $article['item_id'] ?>" />
-                          <button class="btn btn-success submit-button" type="submit">Edit Item</button>
-                        </form>
-                      </td>
-                      <td>
-                        <form action="?command=remove_item" method="post">
-                          <input type="hidden" name="item_to_remove" value="<?php echo $article['item_id'] ?>" />
-                          <button class="btn btn-danger submit-button" type="submit">Remove</button>
-                        </form>
-                      </td>
-                  </table>
+              <div class="col-lg-3 col-md-6 col-sm-6" name="article">
+                <div class="rounded" style="text-align:center; background-color:beige; margin:0.25rem;">
+                  <span name="item_name">
+                    <?php echo $article['item_name']; ?>
+                  </span>
+                </div>
+                <div style="text-align:center;">
+                  <img src=" data:image/jpg;charset=utf8;base64,<?php echo base64_encode($article['item_image']); ?>" alt="Preview image of clothing article." width="226" height="226" class="img-thumbnail">
+                </div>
+                <div class="row">
+                  <div class="col-sm">
+                    <div class="text-start" style="margin:0.25rem;">
+                      <form action="?command=edit_item" method="post">
+                        <input type="hidden" name="item_to_edit" value="<?php echo $article['item_id'] ?>" />
+                        <button class="btn btn-success" type="submit">Edit Item</button>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div class="text-end" style="margin:0.25rem;">
+                      <form action="?command=remove_item" method="post">
+                        <input type="hidden" name="item_to_remove" value="<?php echo $article['item_id'] ?>" />
+                        <button class="btn btn-danger" type="submit">Remove</button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             <?php endforeach; ?>
             <br>
             <br>
           </div>
+          <div class="container-fluid" id="searchResult">
+          </div>
         </div>
       <?php
       } else {
         echo '<p class="m-2">No clothes have been uploaded to the database yet.</p>';
       } ?>
-      <!-- Commenting out old code...
-      <p class="m-2">Select a piece of clothing to edit.</p>
-      <div class="row">
-        <div class="container-fluid">
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <a href="#" class="image-link">
-            <img src="images/200x200.svg" alt="200x200 grey image placeholder box." class="img-thumbnail">
-          </a>
-          <br>
-          <br>
-        </div>
-      </div>
-      -->
       <br>
     </div>
   </div>
 
   <!-- Formality Filtering -->
-  <div class="col-md-4">
+  <div class="col-xl-4 col-md col-sm">
     <div class="container spaced-from-tb">
       <div class="container">
-        <p>Filter by:</p>
-        <hr class="m-2">
-        <p class="mb-2">Formality</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckCasual">
-          <label class="form-check-label" for="flexCheckCasual">
-            Casual
-          </label>
+        <div id="searching" hidden>
+          <h1 class="display-6">Search Mode</h1>
+          <p>Search for an article by name...</p>
+          <form method="post">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter your search here..." id="searchValue" name="searchValue" onkeypress="checkForEnter(event)" onkeyup="search()" />
+              <input type="submit" class="btn btn-primary" value="Search" id="searchBtn" name="searchBtn" onclick="search()" />
+            </div>
+          </form>
+          <br>
+          <div class="text-end">
+            <button type="button" class="btn btn-warning" onclick="switchMode();">Switch to Filter Mode</button>
+          </div>
+          <br>
         </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckBusinessCasual">
-          <label class="form-check-label" for="flexCheckBusinessCasual">
-            Business casual
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckSemiFormal">
-          <label class="form-check-label" for="flexCheckSemiFormal">
-            Semi-formal
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckFormal">
-          <label class="form-check-label" for="flexCheckFormal">
-            Formal
-          </label>
-        </div>
+        <div id="filtering">
+          <h1 class="display-6">Filter Mode</h1>
+          <p>Filter by:</p>
+          <hr class="m-2">
+          <p class="mb-2">Formality</p>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckCasual" onclick="filter_casual()">
+            <label class="form-check-label" for="flexCheckCasual">
+              Casual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckBusinessCasual" onclick="filter_businesscasual()">
+            <label class="form-check-label" for="flexCheckBusinessCasual">
+              Business casual
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckSemiFormal" onclick="filter_semiformal()">
+            <label class="form-check-label" for="flexCheckSemiFormal">
+              Semi-formal
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" value="" name="flexRadioFormality" id="flexCheckFormal" onclick="filter_formal()">
+            <label class="form-check-label" for="flexCheckFormal">
+              Formal
+            </label>
+          </div>
 
-        <!-- Type Filtering -->
-        <hr class="m-2">
-        <p class="mb-2">Type</p>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckTop">
-          <label class="form-check-label" for="flexCheckTop">
-            Top
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckBottom">
-          <label class="form-check-label" for="flexCheckBottom">
-            Bottom
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault">
-            Full body
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckAccessory">
-          <label class="form-check-label" for="flexCheckAccessory">
-            Accessory
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="flexCheckShoes">
-          <label class="form-check-label" for="flexCheckShoes">
-            Shoes
-          </label>
+          <div hidden>
+            <!-- Type Filtering -->
+            <hr class="m-2">
+            <p class="mb-2">Type</p>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckTop" onclick="filterTop()">
+              <label class="form-check-label" for="flexCheckTop">
+                Top
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckBottom" onclick="filterBottom()">
+              <label class="form-check-label" for="flexCheckBottom">
+                Bottom
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckDefault" onclick="filterFullbody()">
+              <label class="form-check-label" for="flexCheckDefault">
+                Full body
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckAccessory" onclick="filterAccessory()">
+              <label class="form-check-label" for="flexCheckAccessory">
+                Accessory
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="flexRadioType" value="" id="flexCheckShoes" onclick="filterShoes()">
+              <label class="form-check-label" for="flexCheckShoes">
+                Shoes
+              </label>
+            </div>
+          </div>
+          <br>
+          <div class="text-end">
+            <button type="button" class="btn btn-warning" onclick="switchMode();">Switch to Search Mode</button>
+          </div>
         </div>
         <br>
         <br>
@@ -216,6 +274,6 @@
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   <script src="js/main.js"></script>
-  </body>
+</body>
 
 </html>

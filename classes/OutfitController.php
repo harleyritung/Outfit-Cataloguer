@@ -55,8 +55,23 @@ class OutfitController
             case "edit_item":
                 $this->edit_item();
                 break;
+            case "update_item":
+                $this->update_item();
+                break;
             case "remove_item":
                 $this->remove_item();
+                break;
+            case "filter_casual":
+                $this->filter_casual();
+                break;
+            case "filter_businesscasual":
+                $this->filter_businesscasual();
+                break;
+            case "filter_semiformal":
+                $this->filter_semiformal();
+                break;
+            case "filter_formal":
+                $this->filter_formal();
                 break;
             case "create_outfits":
                 $this->create_outfits();
@@ -154,16 +169,26 @@ class OutfitController
 
     public function home()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
         include("templates/home.php");
     }
 
     public function profile()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
         include("templates/profile.php");
     }
 
     public function edit_profile()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
         // user edited profile
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["email"] = $_POST["email"];
@@ -188,16 +213,21 @@ class OutfitController
 
     public function upload_clothes()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
         $status = $statusMsg = '';
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $status = 'error';
             if (!empty($_FILES['article_img']['name'])) {
-                $fileName = basename($_FILES['article_img']['name']);
-                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
-                $image = $_FILES['article_img']['tmp_name'];
-                $imgContent = addslashes(file_get_contents($image));
+                $filename = $_FILES['article_img']['name'];
+                // $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+                $tempname = $_FILES['article_img']['tmp_name'];
+                $link = mysqli_connect(Config::$db["host"], Config::$db["user"], Config::$db["pass"], Config::$db["database"]);
+                $imgData = file_get_contents($tempname);
 
-                if ($imgContent !== "") {
+                if ($imgData !== "") {
                     // check for and set null values
                     $optional_attrs = [
                         "style" => $_POST["Style"],
@@ -210,11 +240,12 @@ class OutfitController
                             $optional_attrs[$key] = NULL;
                         }
                     }
-                    // Insert image content into database 
+
+                    // insert image content into database 
                     $insert = $this->db->query(
                         "insert into project_article (item_name, uid, item_formality, item_type, item_style, item_pattern, 
                         item_material, item_color, item_image) values (?, ?, ?, ?, ?, ?, ?, ?, ?);",
-                        "sissssssb",
+                        "sisssssss",
                         $_POST["Name"],
                         $_SESSION["uid"],
                         $_POST["Formality"],
@@ -223,14 +254,14 @@ class OutfitController
                         $optional_attrs["pattern"],
                         $optional_attrs["material"],
                         $optional_attrs["color"],
-                        addslashes(file_get_contents($image))
+                        mysqli_real_escape_string($link, $imgData)
                     );
 
                     if ($insert) {
                         $status = 'success';
-                        $statusMsg = "File uploaded successfully.";
+                        $statusMsg = "File uploaded successfully";
                     } else {
-                        $statusMsg = "File upload failed, please try again.";
+                        $statusMsg = "File upload failed, please try again";
                     }
                 }
             }
@@ -241,43 +272,71 @@ class OutfitController
 
     public function edit_clothes()
     {
-        $list_of_clothes_json = $this->db->query("select item_name from project_article where uid = ?;", "s", $_SESSION["uid"]);
-        $list_of_clothes_json = json_encode($list_of_clothes_json);
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
 
+        $list_of_clothes_json = json_encode($this->db->query("select item_name from project_article where uid = ?;", "s", $_SESSION["uid"]));
         $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
+
         include("templates/edit_clothes.php");
     }
 
     public function edit_item()
     {
-        $statusMsg = $status = '';
-        $status = 'error';
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
         $item = $this->db->query("select * from project_article where item_id = ?;", "s", $_POST["item_to_edit"]);
         $item = $item[0];
 
+        include("templates/edit_item.php");
+    }
+
+    public function update_item()
+    {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
+        $statusMsg = $status = '';
+        $status = 'error';
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if (!empty($_POST['btnAction']) && $_POST['btnAction'] == "Update") {
-                $update = $this->db->query(
-                    "update project_article set item_name = ?, item_formality = ?, item_type = ?, item_style = ?, item_pattern = ?, 
-            item_material = ?, item_color = ? where item_id = ?;",
-                    "sssssssb",
-                    $_POST["Name"],
-                    $_POST["Formality"],
-                    $_POST["Type"],
-                    $_POST["Style"],
-                    $_POST["Pattern"],
-                    $_POST["Material"],
-                    $_POST["Color"],
-                    $_POST['item_to_edit']
-                );
-                if ($update) {
-                    $status = 'success';
-                    $statusMsg = "Article updated successfully.";
-                } else {
-                    $statusMsg = "Article update failed, please try again.";
+            $optional_attrs = [
+                "style" => $_POST["Style"],
+                "pattern" => $_POST["Pattern"],
+                "material" => $_POST["Material"],
+                "color" => $_POST["Color"]
+            ];
+            foreach ($optional_attrs as $key => $value) {
+                if ($value === "Null") {
+                    $optional_attrs[$key] = NULL;
                 }
-                echo $statusMsg;
             }
+
+            $update = $this->db->query(
+                "update project_article set item_name = ?, item_formality = ?, item_type = ?, item_style = ?, item_pattern = ?, 
+        item_material = ?, item_color = ? where item_id = ?;",
+                "ssssssss",
+                $_POST["Name"],
+                $_POST["Formality"],
+                $_POST["Type"],
+                $optional_attrs["style"],
+                $optional_attrs["pattern"],
+                $optional_attrs["material"],
+                $optional_attrs["color"],
+                $_POST["ID"]
+            );
+            if ($update) {
+                $status = 'success';
+                $statusMsg = "Article updated successfully";
+                header("Location: ?command=edit_clothes");
+            } else {
+                $statusMsg = "Article update failed, please try again";
+            }
+            echo $statusMsg;
         }
 
         include("templates/edit_item.php");
@@ -285,28 +344,72 @@ class OutfitController
 
     public function remove_item()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
         $statusMsg = $status = '';
         $status = 'error';
         $delete = $this->db->query("delete from project_article where item_id = ?;", "s", $_POST["item_to_remove"]);
 
         if ($delete) {
             $status = 'success';
-            $statusMsg = "Article deleted successfully.";
+            $statusMsg = "Article deleted successfully";
         } else {
-            $statusMsg = "Article deletion failed, please try again.";
+            $statusMsg = "Article deletion failed, please try again";
         }
 
         $list_of_clothes = $this->db->query("select * from project_article where uid = ?;", "s", $_SESSION["uid"]);
         header("Location: ?command=edit_clothes");
     }
 
+    public function filter_casual()
+    {
+        $data = $this->db->query("select * from project_article where item_formality = 'casual' and uid = " . $_SESSION["uid"]);
+
+        $link = mysqli_connect(Config::$db["host"], Config::$db["user"], Config::$db["pass"], Config::$db["database"]);
+        $query = "select * from project_article where item_formality = 'casual' and uid = " . $_SESSION["uid"];
+        $result = $link->query($query);
+        $arr = array();
+        if ($result->num_rows > 0) {
+            $rows = $result->fetch_all(MYSQLI_ASSOC);
+            $arr[] = $rows;
+        } else {
+            echo "No results found";
+        }
+
+        header("Content-type: application/json");
+        echo json_encode($arr[0], JSON_PRETTY_PRINT);
+        
+    }
+    public function filter_businesscasual()
+    {
+        $data = $this->db->query("select * from project_article where item_formality = 'businesscasual' and uid = " . $_SESSION["uid"]);
+    }
+    public function filter_semiformal()
+    {
+        $data = $this->db->query("select * from project_article where item_formality = 'semiformal' and uid = " . $_SESSION["uid"]);
+    }
+    public function filter_formal()
+    {
+        $data = $this->db->query("select * from project_article where item_formality = 'formal' and uid = " . $_SESSION["uid"]);
+    }
+
     public function create_outfits()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
         include("templates/create_outfits.php");
     }
 
     public function saved_outfits()
     {
+        if (!isset($_SESSION["name"])) {
+            header("Location: ?command=login");
+        }
+
         include("templates/saved_outfits.php");
     }
 }

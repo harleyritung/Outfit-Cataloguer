@@ -16,6 +16,36 @@
   <link rel="stylesheet" href="styles/main.css">
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <script type="text/javascript">
+    function inputValidate() {
+      var input = document.getElementById("ArticleName").value;
+      if (input.length > 0) {
+        if (input.trim().length === 0) {
+          document.getElementById("UpdateButton").disabled = true;
+
+          inputHelp.textContent = "⚠ Name cannot contain only spaces.";
+          document.getElementById("ArticleName").style.borderColor = 'red';
+        } else {
+          document.getElementById("UpdateButton").disabled = false;
+
+          inputHelp.textContent = "";
+          document.getElementById("ArticleName").style.borderColor = null;
+        }
+      } else {
+        document.getElementById("UpdateButton").disabled = true;
+
+        inputHelp.textContent = "⚠ Name cannot be blank.";
+        document.getElementById("ArticleName").style.borderColor = 'red';
+      }
+    }
+
+    function checkForEnter(key) {
+      if (key.keyCode == 13) {
+        key.preventDefault();
+      }
+    }
+  </script>
 </head>
 
 <body>
@@ -73,29 +103,31 @@
 
   <!-- content -->
   <section>
-    <!-- Upload clothes form -->
-    <form enctype="multipart/form-data" action="?command=edit_item" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
+    <form enctype="multipart/form-data" action="?command=update_item" method="post" onsubmit="return validate('Name', 'Formality', 'Type');">
       <!-- Image upload -->
-      <div class="col-md-4 file-upload-container">
+      <div class="col-md-4">
         <div class="container spaced-from-tb">
-          <h1 class="display-6 underlined ps-1">Upload Picture</h1>
-          <label for="image_input" style="margin-bottom: 1rem;">Images can be no larger than 2 MB.</label>
-          <div class="img-container">
-            <input type="hidden" name="MAX_FILE_SIZE" value="4194304">
-            <input type="file" id="article_img" accept="image/jpeg, image/png" name="article_img">
-            <div id="display_image"></div>
+          <?php
+          if (!empty($error_msg)) {
+            echo "<div class='alert alert-danger'>$error_msg</div>";
+          }
+          ?>
+          <div class="img-container" style="text-align:center;">
+            <img src=" data:image/jpg;charset=utf8;base64,<?php echo base64_encode($item['item_image']); ?>" alt="Preview image of clothing article." class="img-thumbnail mini">
           </div>
           <br>
           <!-- upload button -->
-          <input type="hidden" name="item_to_edit" value="<?php echo $item['item_id'] ?>" />
-          <button class="btn btn-primary submit-button" type="submit" name="btnAction" value="Update">Update</button>
+          <div class="text-center">
+            <button class="btn btn-primary" type="submit" id="UpdateButton">Update Item</button>
+            <input type="hidden" name="ID" value="<?php echo $item['item_id'] ?>">
+          </div>
         </div>
       </div>
 
       <!-- Attribute selection -->
-      <div class="col-md-8" id="scroll-Div" style="padding-bottom: 2rem;">
+      <div class="col-md-8" style="padding-bottom: 2rem;">
         <!-- Required attributes -->
-        <div class="col-md-6">
+        <div class="col-md-6" id="scroll-Div">
           <div class="container spaced-from-tb">
             <div class="container">
               <h1 class="display-6">Required Attributes</h1>
@@ -104,8 +136,9 @@
               <!-- Article Name -->
               <div class="mb-2">
                 <label for="ArticleName" class="form-label">Article Name:</label>
-                <input type="text" class="form-control" id="ArticleName" name="Name" style="margin-bottom: 1rem;" value="<?php echo $item['item_name']; ?>">
+                <input type="text" class="form-control" id="ArticleName" name="Name" value="<?php echo $item['item_name']; ?>" onkeypress="checkForEnter(event)">
               </div>
+              <div id="inputHelp" class="form-text" style="color:red;"></div>
               <hr class="m-2">
 
               <!-- Formality -->
@@ -172,7 +205,7 @@
           </div>
         </div>
         <!-- Optional attributes -->
-        <div class="col-md-6">
+        <div class="col-md-6" id="scroll-Div">
           <div class="container spaced-from-tb">
             <div class="container">
               <h1 class="display-6">Optional Attributes</h1>
@@ -208,6 +241,12 @@
                   Streetwear
                 </label>
               </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Style" value="Null" id="flexRadioNullStyle" <?php if ($item['item_style'] === NULL) echo 'checked'; ?>>
+                <label class="form-check-label" for="flexRadioNullStyle">
+                  Null
+                </label>
+              </div>
               <hr class="m-2">
 
               <!-- Pattern Selection -->
@@ -234,6 +273,12 @@
                 <input class="form-check-input" type="radio" name="Pattern" value="Dots" id="flexRadioDots" <?php if ($item['item_pattern'] === 'Dots') echo 'checked'; ?>>
                 <label class="form-check-label" for="flexRadioDots">
                   Dots
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Pattern" value="Null" id="flexRadioNullPattern" <?php if ($item['item_pattern'] === NULL) echo 'checked'; ?>>
+                <label class="form-check-label" for="flexRadioNullPattern">
+                  Null
                 </label>
               </div>
               <hr class="m-2">
@@ -274,6 +319,12 @@
                 <input class="form-check-input" type="radio" name="Material" value="Khaki" id="flexRadioKhaki" <?php if ($item['item_material'] === 'Khaki') echo 'checked'; ?>>
                 <label class="form-check-label" for="flexRadioKhaki">
                   Khaki
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Material" value="Null" id="flexRadioNullMaterial" <?php if ($item['item_material'] === NULL) echo 'checked'; ?>>
+                <label class="form-check-label" for="flexRadioNullMaterial">
+                  Null
                 </label>
               </div>
               <hr class="m-2">
@@ -346,6 +397,12 @@
                   Purple
                 </label>
               </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="Color" value="Null" id="flexRadioNullColor" <?php if ($item['item_color'] === NULL) echo 'checked'; ?>>
+                <label class="form-check-label" for="flexRadioNullColor">
+                  Null
+                </label>
+              </div>
               <br>
               <br>
             </div>
@@ -361,14 +418,23 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="?command=home">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><a class="active-link" href="?command=edit_clothes">Edit Clothes</a></li>
+            <li class="breadcrumb-item"><a href="?command=edit_clothes">Edit Clothes</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a class="active-link" href="?command=command=edit_item">Edit Item</a></li>
           </ol>
         </nav>
         <small style="justify-content: right;">Copyright &copy; 2022 Nathan Hartung &amp; Vivine Zheng</small>
       </div>
     </nav>
   </footer>
+
+  <script type="text/javascript">
+    document.getElementById("ArticleName").addEventListener("keyup", function() {
+      inputValidate();
+    });
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
   <script src="js/main.js"></script>
 </body>
 
